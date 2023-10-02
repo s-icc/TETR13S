@@ -1,24 +1,13 @@
 extends CharacterBody2D
+class_name Block
 
-@export var delay = 0.5
+var delay = 0.5
 var timer = 0
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
-	pass
-
-func _physics_process(delta):
-	move_down(delta)
-
-func move_down(delta):
+func move_down():
 	# basic timer
 	if timer < delay:
-		timer += delta
+		timer += get_physics_process_delta_time()
 		return
 	
 	timer = 0
