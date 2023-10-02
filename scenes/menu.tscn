@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://heth2n11cgkn"]
+
+[ext_resource type="PackedScene" uid="uid://xjgrjs8vubvp" path="res://scenes/menu_bg.tscn" id="1_3ngmc"]
+[ext_resource type="PackedScene" uid="uid://i3j0a1vu7ov0" path="res://scenes/logo.tscn" id="2_1q2sn"]
+[ext_resource type="Texture2D" uid="uid://bm1du1w1hfxs0" path="res://assets/Resources/playOFF.png" id="3_2tino"]
+[ext_resource type="Texture2D" uid="uid://biwv1cpeg5x0e" path="res://assets/Resources/exitOFF.png" id="4_p7oss"]
+
+[node name="menu" type="Node2D"]
+
+[node name="menu_bg" parent="." instance=ExtResource("1_3ngmc")]
+position = Vector2(485, 296)
+scale = Vector2(0.839999, 0.839999)
+
+[node name="logo" parent="." instance=ExtResource("2_1q2sn")]
+position = Vector2(485, 134)
+scale = Vector2(0.239999, 0.239999)
+
+[node name="Button" type="Button" parent="."]
+offset_left = 398.0
+offset_top = 249.0
+offset_right = 906.0
+offset_bottom = 507.0
+scale = Vector2(0.35, 0.35)
+action_mode = 0
+icon = ExtResource("3_2tino")
+
+[node name="Button2" type="Button" parent="."]
+offset_left = 398.0
+offset_top = 360.0
+offset_right = 906.0
+offset_bottom = 618.0
+scale = Vector2(0.35, 0.35)
+icon = ExtResource("4_p7oss")

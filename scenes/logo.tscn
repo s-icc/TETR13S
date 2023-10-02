@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://i3j0a1vu7ov0"]
+
+[ext_resource type="Script" path="res://scenes/logo.gd" id="1_ng6tv"]
+[ext_resource type="Texture2D" uid="uid://xav53usd1wjx" path="res://assets/Resources/logoSheet.png" id="2_ndw2s"]
+
+[sub_resource type="Animation" id="Animation_mw4lf"]
+resource_name = "Animation"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_u6mg8"]
+_data = {
+"Animation": SubResource("Animation_mw4lf")
+}
+
+[node name="logo" type="Node2D"]
+script = ExtResource("1_ng6tv")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_ndw2s")
+hframes = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
+libraries = {
+"": SubResource("AnimationLibrary_u6mg8")
+}
