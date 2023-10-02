@@ -1,13 +1,13 @@
 [gd_scene load_steps=19 format=3 uid="uid://cvpkcf1xrvj2h"]
 
-[ext_resource type="Texture2D" uid="uid://uburioss1vjq" path="res://assets/Shape Blocks/I-16.png" id="1_0da7u"]
 [ext_resource type="Script" path="res://scripts/Block.gd" id="1_tkcjk"]
-[ext_resource type="Texture2D" uid="uid://dot31pbwxblrx" path="res://assets/Shape Blocks/J-16.png" id="2_y65la"]
-[ext_resource type="Texture2D" uid="uid://dmyp5iss0wwi0" path="res://assets/Shape Blocks/L-16.png" id="3_c1tdt"]
-[ext_resource type="Texture2D" uid="uid://13qp5oja3viy" path="res://assets/Shape Blocks/O-16.png" id="4_3y1jt"]
-[ext_resource type="Texture2D" uid="uid://r8sp1siy8gys" path="res://assets/Shape Blocks/S-16.png" id="5_0gp6u"]
-[ext_resource type="Texture2D" uid="uid://ce22pbfw67n55" path="res://assets/Shape Blocks/T-16.png" id="6_vcbfg"]
-[ext_resource type="Texture2D" uid="uid://bgvaflsmegm4c" path="res://assets/Shape Blocks/Z-16.png" id="7_44hx2"]
+[ext_resource type="Texture2D" uid="uid://75cc2mafcwhc" path="res://assets/Shape Blocks/I.png" id="2_m3v1b"]
+[ext_resource type="Texture2D" uid="uid://phvqwfh03k7p" path="res://assets/Shape Blocks/J.png" id="2_pcc0k"]
+[ext_resource type="Texture2D" uid="uid://cdgeg60w6q3bd" path="res://assets/Shape Blocks/L.png" id="3_8dv4u"]
+[ext_resource type="Texture2D" uid="uid://b3ktxsbxdjg4" path="res://assets/Shape Blocks/O.png" id="4_b5g5d"]
+[ext_resource type="Texture2D" uid="uid://e27gflu2ulgv" path="res://assets/Shape Blocks/S.png" id="5_mdvmg"]
+[ext_resource type="Texture2D" uid="uid://dlwuxw5c3mqqc" path="res://assets/Shape Blocks/T.png" id="6_d481f"]
+[ext_resource type="Texture2D" uid="uid://cca8g5vap0yd5" path="res://assets/Shape Blocks/Z.png" id="7_3oo0a"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tdawu"]
 size = Vector2(16, 64)
@@ -42,20 +42,22 @@ size = Vector2(32, 16)
 [node name="Blocks" type="Node2D"]
 
 [node name="I" type="CharacterBody2D" parent="."]
+visible = false
 position = Vector2(424, 88)
 script = ExtResource("1_tkcjk")
 
 [node name="Sprite2D" type="Sprite2D" parent="I"]
-texture = ExtResource("1_0da7u")
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="I"]
+visible = false
 shape = SubResource("RectangleShape2D_tdawu")
 
 [node name="J" type="CharacterBody2D" parent="."]
 visible = false
 
 [node name="Sprite2D" type="Sprite2D" parent="J"]
-texture = ExtResource("2_y65la")
+texture = ExtResource("2_pcc0k")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="J"]
 position = Vector2(-16, 0)
@@ -69,7 +71,7 @@ shape = SubResource("RectangleShape2D_fi687")
 visible = false
 
 [node name="Sprite2D" type="Sprite2D" parent="L"]
-texture = ExtResource("3_c1tdt")
+texture = ExtResource("3_8dv4u")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="L"]
 position = Vector2(16, 0)
@@ -83,7 +85,7 @@ shape = SubResource("RectangleShape2D_24k1h")
 visible = false
 
 [node name="Sprite2D" type="Sprite2D" parent="O"]
-texture = ExtResource("4_3y1jt")
+texture = ExtResource("4_b5g5d")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="O"]
 shape = SubResource("RectangleShape2D_kwlho")
@@ -92,7 +94,7 @@ shape = SubResource("RectangleShape2D_kwlho")
 visible = false
 
 [node name="Sprite2D" type="Sprite2D" parent="S"]
-texture = ExtResource("5_0gp6u")
+texture = ExtResource("5_mdvmg")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="S"]
 position = Vector2(8, -8)
@@ -106,7 +108,7 @@ shape = SubResource("RectangleShape2D_plwlt")
 visible = false
 
 [node name="Sprite2D" type="Sprite2D" parent="T"]
-texture = ExtResource("6_vcbfg")
+texture = ExtResource("6_d481f")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="T"]
 position = Vector2(0, -8)
@@ -120,7 +122,7 @@ shape = SubResource("RectangleShape2D_4cyb1")
 visible = false
 
 [node name="Sprite2D" type="Sprite2D" parent="Z"]
-texture = ExtResource("7_44hx2")
+texture = ExtResource("7_3oo0a")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Z"]
 position = Vector2(-8, -8)
@@ -129,3 +131,7 @@ shape = SubResource("RectangleShape2D_plwlt")
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Z"]
 position = Vector2(8, 8)
 shape = SubResource("RectangleShape2D_2yc47")
+
+[node name="I2" type="Sprite2D" parent="."]
+position = Vector2(424, 88)
+texture = ExtResource("2_m3v1b")
