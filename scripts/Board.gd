@@ -1,25 +1,14 @@
 extends Node2D
 class_name Board
 
-var blockAF = BlockAbstractFactory.new()
-var block = blockAF.get_block()
-@export var block_spawn = 2
-var timer = 0
+var block_fact = BlockFactory.new()
+var block = block_fact.get_block() as Block
+@export var block_delay = 0.5
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	block.translate(Vector2(112, 16))
+	add_child(block, true)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
-	pass
-
-func _physics_process(_delta):
-	if block:
-		block.move_down()
-	
-	#if timer < block_spawn:
-	#	timer += delta
-	#	return
-	
-	#timer = 0
+func _physics_process(delta):
+	block.move_down(delta, block_delay)

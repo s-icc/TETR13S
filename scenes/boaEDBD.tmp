@@ -2462,7 +2462,7 @@ sources/4 = SubResource("TileSetAtlasSource_2xbef")
 
 [node name="Board" type="Node2D"]
 script = ExtResource("1_72cw6")
-block_delay = 0.2
+block_spawn = null
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_yegvs")
