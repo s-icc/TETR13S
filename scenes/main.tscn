@@ -12,4 +12,5 @@ offset_bottom = 612.0
 color = Color(0.321569, 0.423529, 0.490196, 1)
 
 [node name="Board" parent="." instance=ExtResource("1_w43hq")]
-position = Vector2(318, 13)
+position = Vector2(333.08, -368.605)
+scale = Vector2(1.54, 1.54)
