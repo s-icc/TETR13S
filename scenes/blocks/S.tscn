@@ -1,10 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://bhsu1rg0bberd"]
+[gd_scene load_steps=3 format=3 uid="uid://bhsu1rg0bberd"]
 
 [ext_resource type="Script" path="res://scripts/Block.gd" id="1_hj2lu"]
 [ext_resource type="Texture2D" uid="uid://e27gflu2ulgv" path="res://assets/Shape Blocks/S.png" id="2_fdkrc"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_wndql"]
-size = Vector2(32, 16)
 
 [node name="S" type="CharacterBody2D"]
 position = Vector2(24, 16)
@@ -13,10 +10,5 @@ script = ExtResource("1_hj2lu")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_fdkrc")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(8, -8)
-shape = SubResource("RectangleShape2D_wndql")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
-position = Vector2(-8, 8)
-shape = SubResource("RectangleShape2D_wndql")
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(8, 0, 8, 16, -24, 16, -24, 0, -8, 0, -8, -16, 24, -16, 24, 0)

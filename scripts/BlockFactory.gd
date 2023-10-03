@@ -11,7 +11,5 @@ var blocks_scene = [
 	preload("res://scenes/blocks/Z.tscn")
 ]
 
-var block_scene = blocks_scene.pick_random()
-
 func get_block():
-	return block_scene.instantiate()
+	return blocks_scene.pick_random().instantiate()
