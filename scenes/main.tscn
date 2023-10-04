@@ -12,5 +12,4 @@ offset_bottom = 612.0
 color = Color(0.321569, 0.423529, 0.490196, 1)
 
 [node name="Board" parent="." instance=ExtResource("1_w43hq")]
-position = Vector2(98, 40)
-block_delay = 0.5
+position = Vector2(59, 12)
