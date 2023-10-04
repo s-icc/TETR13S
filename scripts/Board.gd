@@ -13,6 +13,13 @@ var tile_num_width
 var tile_map_scale
 var blank_tile_pos
 var middle_tile: int
+enum Block_Type {
+	BLANK = 0,
+	WALL = 1,
+	FLOOR = 2,
+	BLOCK = 3
+}
+var board_block_types
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -37,11 +44,6 @@ func spawn_shape():
 func _physics_process(_delta):
 	if !shape:
 		return
-	"""
-	if shape.timer.time_left == 0 and !Input.is_action_pressed("down"):
-		shape.move(Vector2.DOWN)
-		shape.timer.start(shape_delay)
-	"""
 	
 	if timer.time_left == 0:
 		move(Vector2.DOWN)
@@ -56,27 +58,32 @@ func move(direction):
 		
 		new_tile_data = tile_map.get_cell_tile_data(0, new_pos[n])
 		
-		if !new_tile_data is TileData:
-			continue
-	
 		match new_tile_data.get_custom_data_by_layer_id(0):
-			1:
+			Block_Type.WALL:
 				return
-			2:
+			Block_Type.FLOOR:
 				spawn_shape()
-				# TODO: hacer todos los bloques de la figura del tipo floor
 				return
+	
+	for n in shape_pos.size():
+		new_tile_data = tile_map.get_cell_tile_data(0, new_pos[n])
+		
+		if new_tile_data.get_custom_data_by_layer_id(0) != Block_Type.BLOCK:
+			continue
+		
+		if shape_pos.has(new_pos[n]):
+			continue
+		
+		spawn_shape()
+		return
 	
 	for n in shape_pos.size():
 		set_tile(shape_pos[n], blank_tile_pos)
 	
 	for n in new_pos.size():
 		new_tile_data = tile_map.get_cell_tile_data(0, new_pos[n])
-				
 		set_tile(new_pos[n], block_atlas_coord)
-		
 		shape_pos[n] = new_pos[n]
-	
 
 func set_tile(tile_pos, atlas_pos):
 	tile_map.set_cell(0, tile_pos, 4, atlas_pos)
@@ -90,9 +97,3 @@ func _unhandled_input(_event):
 	
 	if Input.is_action_pressed("down"):
 		move(Vector2.DOWN)
-	
-	if Input.is_action_just_pressed("rotate_left"):
-		pass
-	
-	if Input.is_action_just_pressed("place"):
-		pass
