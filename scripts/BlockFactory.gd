@@ -12,13 +12,43 @@ var placed_blocks_atlas_coords = PackedVector2Array([
 ])
 
 var shapes = [
-	PackedVector2Array([Vector2(0, 0), Vector2(0, 1), Vector2(0, 2), Vector2(0, 3)]), # I
+	PackedVector2Array([Vector2(-1, 0), Vector2(0, 0), Vector2(1, 0), Vector2(2, 0)]), # I
 	PackedVector2Array([Vector2(0, 0), Vector2(0, 1), Vector2(1, 1), Vector2(2, 1)]), # J
 	PackedVector2Array([Vector2(0, 0), Vector2(-2, 1), Vector2(-1, 1), Vector2(0, 1)]), # L
 	PackedVector2Array([Vector2(0, 0), Vector2(1, 0), Vector2(0, 1), Vector2(1, 1)]), # O
 	PackedVector2Array([Vector2(0, 0), Vector2(1, 0), Vector2(-1, 1), Vector2(0, 1)]), # S
 	PackedVector2Array([Vector2(0, 0), Vector2(-1, 1), Vector2(0, 1), Vector2(1, 1)]), # T
 	PackedVector2Array([Vector2(0, 0), Vector2(1, 0), Vector2(1, 1), Vector2(2, 1)]) # Z
+]
+
+var shapes2 = [
+	PackedVector2Array([Vector2(0, 1), Vector2(0, 2), Vector2(0, 3), Vector2(0, 4)]), # I
+	PackedVector2Array([Vector2(0, 0), Vector2(1, 0), Vector2(0, 1), Vector2(0, 2)]), # J
+	PackedVector2Array([Vector2(1, 2), Vector2(0, 0), Vector2(0, 1), Vector2(0, 2)]), # L
+	PackedVector2Array([Vector2(0, 0), Vector2(1, 0), Vector2(0, 1), Vector2(1, 1)]), # O
+	PackedVector2Array([Vector2(0, 0), Vector2(0, 1), Vector2(1, 1), Vector2(1, 2)]), # S
+	PackedVector2Array([Vector2(0, 0), Vector2(0, 1), Vector2(0, 2), Vector2(1, 1)]), # T
+	PackedVector2Array([Vector2(0, 0), Vector2(0, 1), Vector2(-1, 1), Vector2(-1, 2)]) # Z
+]
+
+var shapes3 = [
+	PackedVector2Array([Vector2(-1, 0), Vector2(0, 0), Vector2(1, 0), Vector2(2, 0)]), # I
+	PackedVector2Array([Vector2(0, 0), Vector2(1, 0), Vector2(2, 0), Vector2(2, 1)]), # J
+	PackedVector2Array([Vector2(0, 0), Vector2(1, 0), Vector2(2, 0), Vector2(0, 1)]), # L
+	PackedVector2Array([Vector2(0, 0), Vector2(1, 0), Vector2(0, 1), Vector2(1, 1)]), # O
+	PackedVector2Array([Vector2(0, 0), Vector2(1, 0), Vector2(-1, 1), Vector2(0, 1)]), # S
+	PackedVector2Array([Vector2(0, 0), Vector2(-1, 0), Vector2(1, 0), Vector2(0, 1)]), # T
+	PackedVector2Array([Vector2(0, 0), Vector2(1, 0), Vector2(1, 1), Vector2(2, 1)]) # Z
+]
+
+var shapes4 = [
+	PackedVector2Array([Vector2(0, 1), Vector2(0, 2), Vector2(0, 3), Vector2(0, 4)]), # I
+	PackedVector2Array([Vector2(0, 0), Vector2(0, 1), Vector2(0, 2), Vector2(-1, 2)]), # J
+	PackedVector2Array([Vector2(0, 0), Vector2(-1, 0), Vector2(0, 1), Vector2(0, 2)]), # L
+	PackedVector2Array([Vector2(0, 0), Vector2(1, 0), Vector2(0, 1), Vector2(1, 1)]), # O
+	PackedVector2Array([Vector2(0, 0), Vector2(0, 1), Vector2(1, 1), Vector2(1, 2)]), # S
+	PackedVector2Array([Vector2(0, 0), Vector2(0, 1), Vector2(0, 2), Vector2(-1, 1)]), # T
+	PackedVector2Array([Vector2(0, 0), Vector2(0, 1), Vector2(-1, 1), Vector2(-1, 2)]) # Z
 ]
 
 var blocks_atlas_coords = [
@@ -32,13 +62,54 @@ var blocks_atlas_coords = [
 ]
 
 var shape
+var shape2
+var shapeInv
+var rotate = 0
 
-func get_shape():
-	shape = shapes.pick_random()
+func get_shape(type):
+	match type:
+		0:
+			rotate = 0
+			if !shape2:
+				shape = shapes.pick_random()
+				shape2 = shapes.pick_random()
+			else:
+				shape = shape2
+				shape2 = shapes.pick_random()
+		1:
+			if !shapeInv:
+				shape2 = shapes.pick_random()
+				shapeInv = shape
+				shape = shape2
+			else:
+				var temp
+				temp = shape
+				shape = shapeInv
+				shapeInv = temp
+				shape2 = shapes.pick_random()
+		2:
+			if shape:
+				rotate += 1
+				match rotate:
+					1: shape = shapes2[shapes.find(shape)]
+					2: shape = shapes3[shapes2.find(shape)]
+					3: shape = shapes4[shapes3.find(shape)]
+					4: 
+						rotate = 0
+						shape = shapes[shapes4.find(shape)]
 	return shape
 
 func get_block_atlas_coords():
-	return blocks_atlas_coords[shapes.find(shape)]
+	match rotate:
+		0: return blocks_atlas_coords[shapes.find(shape)]
+		1: return blocks_atlas_coords[shapes2.find(shape)]
+		2: return blocks_atlas_coords[shapes3.find(shape)]
+		3: return blocks_atlas_coords[shapes4.find(shape)]
 
 func get_placed_block_atlas_coords():
-	return placed_blocks_atlas_coords[shapes.find(shape)]
+	match rotate: 
+		0: return placed_blocks_atlas_coords[shapes.find(shape)]
+		1: return placed_blocks_atlas_coords[shapes2.find(shape)]
+		2: return placed_blocks_atlas_coords[shapes3.find(shape)]
+		3: return placed_blocks_atlas_coords[shapes4.find(shape)]
+	
