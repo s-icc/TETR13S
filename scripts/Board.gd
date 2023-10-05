@@ -9,10 +9,11 @@ var block_fact = BlockFactory.new()
 var shape: PackedVector2Array
 var block_atlas_coords: PackedVector2Array
 var shape_pos: PackedVector2Array
+var anchor_point_pos: Vector2
+var middle_tile: int
 var tile_num_width
 var tile_map_scale
 var blank_tile_pos
-var middle_tile: int
 enum Block_Type {
 	BLANK = 0,
 	WALL = 1,
@@ -32,9 +33,6 @@ func _ready():
 
 func spawn_shape(type):
 	var tile_data: TileData
-	if type == 1:
-		for n in shape_pos.size():
-			tile_map.set_cell(0, shape_pos[n], 4, blank_tile_pos)
 	
 	shape_pos.clear() # limpia la posicion de la figura en el tablero
 	shape = block_fact.get_shape(type)
@@ -42,15 +40,25 @@ func spawn_shape(type):
 	
 	# pinta en tilemap cada celda de la figura
 	for n in shape.size():
-		# guarda la posicion de la figura en el tablero para el movimiento
-		shape_pos.append(shape[n] + Vector2(middle_tile, 1))
+		if type != 2:
+			# guarda la posicion de la figura en el tablero para el movimiento
+			shape_pos.append(shape[n] + Vector2(middle_tile, 1))
+			
+			# se guarda la posicion en el tablero del bloque con el punto de ancla
+			if shape[n] == Vector2.ZERO:
+				anchor_point_pos = shape_pos[n]
+			
+		elif anchor_point_pos:
+			shape_pos.append(shape[n] + anchor_point_pos)
+		
 		tile_data = tile_map.get_cell_tile_data(0, shape_pos[n])
 		if tile_data.get_custom_data_by_layer_id(0) == Block_Type.FLOOR:
 			print("PENDEJO!!!")
 			# TODO PENDEJO: game over
 			get_tree().quit()
-		tile_map.set_cell(0, shape_pos[n], 4, block_atlas_coords[n])
 		
+		tile_map.set_cell(0, shape_pos[n], 4, block_atlas_coords[n])
+	
 	# inicia un temporizador con 1 segundo
 	timer.start(shape_delay)
 
@@ -82,19 +90,26 @@ func move(direction):
 				return false
 	
 	# una vez verificado que se puede mover a la siguiente posicion
-	for n in shape_pos.size():
-		# se limpian las celdas actuales de la figura
-		set_tile(shape_pos[n], blank_tile_pos)
+	clear_shape()
 	
 	# y se vuelve a pinar la figura pero en su nueva posicion
 	for n in new_pos.size():
 		set_tile(new_pos[n], block_atlas_coords[n])
 		shape_pos[n] = new_pos[n]
+		
+		# actualiza la posicion del bloque con punto de ancla
+		if shape[n] == Vector2.ZERO:
+			anchor_point_pos = shape_pos[n]
 	
 	return true
 
 func set_tile(tile_pos, atlas_pos):
 	tile_map.set_cell(0, tile_pos, 4, atlas_pos)
+
+func clear_shape():
+	for n in shape_pos.size():
+		# se limpian las celdas actuales de la figura
+		set_tile(shape_pos[n], blank_tile_pos)
 
 func set_shape_as_floor():
 	var pos: PackedVector2Array
@@ -119,7 +134,10 @@ func _unhandled_input(_event):
 	if Input.is_action_just_pressed("drop"):
 		while move(Vector2.DOWN):
 			continue
+		
 	if Input.is_action_just_pressed("save"):
 		spawn_shape(1)
+	
 	if Input.is_action_just_pressed("rotate_right"):
+		clear_shape()
 		spawn_shape(2)
