@@ -6,19 +6,19 @@
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2xbef"]
 texture = ExtResource("3_x1qpu")
 0:0/0 = 0
-0:0/0/custom_data_0 = 3
+0:0/0/custom_data_0 = 2
 1:0/0 = 0
-1:0/0/custom_data_0 = 3
+1:0/0/custom_data_0 = 2
 2:0/0 = 0
-2:0/0/custom_data_0 = 3
+2:0/0/custom_data_0 = 2
 3:0/0 = 0
-3:0/0/custom_data_0 = 3
+3:0/0/custom_data_0 = 2
 4:0/0 = 0
-4:0/0/custom_data_0 = 3
+4:0/0/custom_data_0 = 2
 5:0/0 = 0
-5:0/0/custom_data_0 = 3
+5:0/0/custom_data_0 = 2
 6:0/0 = 0
-6:0/0/custom_data_0 = 3
+6:0/0/custom_data_0 = 2
 8:0/0 = 0
 8:0/0/custom_data_0 = 2
 9:0/0 = 0
@@ -992,7 +992,6 @@ sources/4 = SubResource("TileSetAtlasSource_2xbef")
 
 [node name="Board" type="Node2D"]
 script = ExtResource("1_72cw6")
-shape_delay = 0.0
 
 [node name="TileMap" type="TileMap" parent="."]
 position = Vector2(-1.90735e-06, 0)
