@@ -131,55 +131,64 @@ func check_board_rows():
 	var tile_data: TileData
 	var empty_row = BOARD_BOUNDS[1].y + 1
 	
-	for row in board:
+	for row in board.size():
 		var has_blank_block = false
 		var is_empty = true
 		
-		for cell in row:
-			if cell == Block_Type.BLANK:
-				has_blank_block = true
-			
-			if cell == Block_Type.FLOOR:
-				is_empty = false
+		for cell in board[row].size():
+			match board[row][cell]:
+				Block_Type.BLANK:
+					has_blank_block = true
+				Block_Type.FLOOR:
+					is_empty = false
 		
+		# si en toda la fila hay bloques vacios
 		if is_empty:
-			empty_row = board.find(row)
+			empty_row = row
 		
+		# si en la fila no hay bloques vacios
 		if has_blank_block:
 			continue
 		
-		completed_rows.append(board.find(row))
+		# guarda la posicion de la fila llena
+		completed_rows.append(row)
 	
 	var cell_atlas_coords
 	var cell_tile_data: TileData
 	var cell_pos
 	
 	for completed_row in completed_rows:
+		# en el rango desede la fila completada hasta la primer fila vacia
 		for row in range(completed_row, empty_row, -1):
 			for cell in board[row].size():
+				# obtiene la posicion de la celda en el tile map
 				cell_pos = Vector2(BOARD_BOUNDS[0].x + cell, BOARD_BOUNDS[0].y + row)
 				
+				# si la fila actual es el borde
 				if row == BOARD_BOUNDS[0].y:
+					# pinta toda la fila con bloques vacios
 					set_tile(cell_pos, blank_tile_pos)
 					continue
 				
-				for n in completed_rows.size():
-					cell_atlas_coords = tile_map.get_cell_atlas_coords(0, Vector2(cell_pos.x, cell_pos.y - 1))
-					cell_tile_data = tile_map.get_cell_tile_data(0, cell_atlas_coords)
-					
-					set_tile(cell_pos, cell_atlas_coords)
+				# por cada fila completada
+				# establece en la celda actual el bloque de la posicion de arriba
+				cell_atlas_coords = tile_map.get_cell_atlas_coords(0, Vector2(cell_pos.x, cell_pos.y - 1))
+				set_tile(cell_pos, cell_atlas_coords)
 
 func get_board():
 	var board_custom_data: Array
 	var tile_data: TileData
 	
+	# en el rango de los limites del tablero dentro del tile map
 	for n in range(BOARD_BOUNDS[0].y, BOARD_BOUNDS[1].y + 1):
 		var row: Array
 		for m in range(BOARD_BOUNDS[0].x, BOARD_BOUNDS[1].x + 1):
+			# se agrega el custom data de cada celda
 			tile_data = tile_map.get_cell_tile_data(0, Vector2(m, n))
 			row.append(tile_data.get_custom_data_by_layer_id(0))
 		
 		board_custom_data.append(row)
+	
 	return board_custom_data
 
 func _unhandled_input(_event):
