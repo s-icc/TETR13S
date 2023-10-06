@@ -26,7 +26,9 @@ enum Block_Type {
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	tile_num_width = tile_map.get_used_rect().size.x
+	print(tile_num_width)
 	tile_map_scale = tile_map.scale
+	print(tile_map_scale)
 	middle_tile = tile_num_width / 2 - 1
 	blank_tile_pos = Vector2(9, 3) # posicion de celda vacia en tilemap
 	spawn_shape(0)
@@ -53,8 +55,7 @@ func spawn_shape(type):
 		
 		tile_data = tile_map.get_cell_tile_data(0, shape_pos[n])
 		if tile_data.get_custom_data_by_layer_id(0) == Block_Type.FLOOR:
-			print("PENDEJO!!!")
-			# TODO PENDEJO: game over
+			# TODO: game over
 			get_tree().quit()
 		
 		tile_map.set_cell(0, shape_pos[n], 4, block_atlas_coords[n])
@@ -192,6 +193,7 @@ func get_board():
 	return board_custom_data
 
 func _unhandled_input(_event):
+	var tile_data: TileData
 	if Input.is_action_pressed("left"):
 		move(Vector2.LEFT)
 	
@@ -210,5 +212,33 @@ func _unhandled_input(_event):
 		spawn_shape(1)
 	
 	if Input.is_action_just_pressed("rotate_right"):
+		var temp: PackedVector2Array
+		var band: bool
+		for x in 4:
+			temp.append(shape_pos[x] + Vector2.LEFT)
+			if temp[x].x == 7:
+				move(Vector2.RIGHT)
+				band = false
+			continue
+		temp.clear()
+		for x in 4:
+			temp.append(shape_pos[x] + Vector2.RIGHT)
+			if temp[x].x == 18:
+				move(Vector2.LEFT)
+				band = false
+			continue
 		clear_shape()
 		spawn_shape(2)
+		temp.clear()
+		if !band:
+			for x in 4:
+				temp.append(shape_pos[x] + Vector2.LEFT)
+				if temp[x].x == 8:
+					move(Vector2.LEFT)
+					continue
+			temp.clear()
+			for x in 4:
+				temp.append(shape_pos[x] + Vector2.RIGHT)
+				if temp[x].x == 17:
+					move(Vector2.RIGHT)
+					continue
