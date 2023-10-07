@@ -1,0 +1,94 @@
+[gd_scene load_steps=17 format=3 uid="uid://heth2n11cgkn"]
+
+[ext_resource type="PackedScene" uid="uid://xjgrjs8vubvp" path="res://scenes/menu_bg.tscn" id="1_3ngmc"]
+[ext_resource type="Texture2D" uid="uid://xav53usd1wjx" path="res://assets/Resources/logoSheet.png" id="2_a7mx1"]
+[ext_resource type="Script" path="res://scenes/Sprite2D.gd" id="3_kfgkt"]
+[ext_resource type="Texture2D" uid="uid://7m07w0m6g2tj" path="res://assets/Resources/playON.png" id="3_vqygt"]
+[ext_resource type="Texture2D" uid="uid://cwcylwmxvhh7s" path="res://assets/Resources/exitON.png" id="4_risuj"]
+[ext_resource type="Texture2D" uid="uid://bm1du1w1hfxs0" path="res://assets/Resources/playOFF.png" id="4_t0hjs"]
+[ext_resource type="Texture2D" uid="uid://biwv1cpeg5x0e" path="res://assets/Resources/exitOFF.png" id="6_50k0l"]
+[ext_resource type="AudioStream" uid="uid://co0arjttjjlti" path="res://assets/SFX/gb_tetris_theme_a.WAV" id="8_fhdq4"]
+
+[sub_resource type="Animation" id="Animation_nge70"]
+resource_name = "Animation"
+length = 1.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6bamf"]
+_data = {
+"Animation": SubResource("Animation_nge70")
+}
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_88oeo"]
+texture = ExtResource("4_t0hjs")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vo5y2"]
+texture = ExtResource("3_vqygt")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6ga56"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_t88yi"]
+texture = ExtResource("6_50k0l")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wsr42"]
+texture = ExtResource("4_risuj")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_clmko"]
+
+[node name="menu" type="Node2D"]
+
+[node name="menu_bg" parent="." instance=ExtResource("1_3ngmc")]
+position = Vector2(485, 296)
+scale = Vector2(0.839999, 0.839999)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(485, 124)
+scale = Vector2(0.158333, 0.158333)
+texture = ExtResource("2_a7mx1")
+hframes = 4
+script = ExtResource("3_kfgkt")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
+libraries = {
+"": SubResource("AnimationLibrary_6bamf")
+}
+
+[node name="Button" type="Button" parent="."]
+offset_left = 409.0
+offset_top = 246.0
+offset_right = 917.0
+offset_bottom = 504.0
+scale = Vector2(0.3, 0.3)
+theme_override_styles/normal = SubResource("StyleBoxTexture_88oeo")
+theme_override_styles/hover = SubResource("StyleBoxTexture_vo5y2")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_6ga56")
+
+[node name="Button2" type="Button" parent="."]
+offset_left = 409.0
+offset_top = 349.0
+offset_right = 917.0
+offset_bottom = 607.0
+scale = Vector2(0.3, 0.3)
+theme_override_styles/normal = SubResource("StyleBoxTexture_t88yi")
+theme_override_styles/hover = SubResource("StyleBoxTexture_wsr42")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_clmko")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_fhdq4")
+autoplay = true
+
+[connection signal="pressed" from="Button" to="menu_bg" method="_on_button_pressed"]
+[connection signal="toggled" from="Button" to="Button" method="_on_toggled"]
+[connection signal="pressed" from="Button2" to="menu_bg" method="_on_button_2_pressed"]

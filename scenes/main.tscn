@@ -1,6 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://cfcanadl64oir"]
+[gd_scene load_steps=7 format=3 uid="uid://cfcanadl64oir"]
 
+[ext_resource type="PackedScene" uid="uid://bct147xnyycqm" path="res://scenes/background.tscn" id="1_0842q"]
 [ext_resource type="PackedScene" uid="uid://c8lt7f5n5udf6" path="res://scenes/board.tscn" id="1_w43hq"]
+[ext_resource type="AudioStream" uid="uid://dq5fbs74jvuj4" path="res://assets/SFX/blipSelect.wav" id="3_gsp8e"]
+[ext_resource type="AudioStream" uid="uid://c0qarbphe5l18" path="res://assets/SFX/hitHurt.wav" id="4_uigef"]
+[ext_resource type="AudioStream" uid="uid://ujcnquuy1srf" path="res://assets/SFX/powerUp.wav" id="5_8a2xu"]
+[ext_resource type="AudioStream" uid="uid://cc0sb5jkbdplj" path="res://assets/SFX/Ocarina_of_Time-Gerudo_Valley.WAV" id="6_4rfd4"]
 
 [node name="Main" type="Node2D"]
 
@@ -11,5 +16,24 @@ offset_right = 973.0
 offset_bottom = 612.0
 color = Color(0.321569, 0.423529, 0.490196, 1)
 
+[node name="background" parent="." instance=ExtResource("1_0842q")]
+modulate = Color(0.380392, 0.380392, 0.380392, 1)
+position = Vector2(474, 304)
+scale = Vector2(0.85, 0.85)
+
 [node name="Board" parent="." instance=ExtResource("1_w43hq")]
 position = Vector2(59, 12)
+
+[node name="Move" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_gsp8e")
+
+[node name="Drop" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_uigef")
+
+[node name="Line" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(-11, -9)
+stream = ExtResource("5_8a2xu")
+
+[node name="Music1" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_4rfd4")
+autoplay = true

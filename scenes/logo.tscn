@@ -1,0 +1,47 @@
+[gd_scene load_steps=4 format=3 uid="uid://4a24w7qc0j64"]
+
+[sub_resource type="GDScript" id="GDScript_q030c"]
+script/source = "extends Node2D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	$Sprite2D/AnimationPlayer.play(\"Animation\")
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+"
+
+[sub_resource type="Animation" id="Animation_mw4lf"]
+resource_name = "Animation"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_u6mg8"]
+_data = {
+"Animation": SubResource("Animation_mw4lf")
+}
+
+[node name="logo" type="Node2D"]
+script = SubResource("GDScript_q030c")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+hframes = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
+libraries = {
+"": SubResource("AnimationLibrary_u6mg8")
+}

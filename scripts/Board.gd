@@ -175,6 +175,7 @@ func check_board_rows():
 				# establece en la celda actual el bloque de la posicion de arriba
 				cell_atlas_coords = tile_map.get_cell_atlas_coords(0, Vector2(cell_pos.x, cell_pos.y - 1))
 				set_tile(cell_pos, cell_atlas_coords)
+				$"../Line".play()
 
 func get_board():
 	var board_custom_data: Array
@@ -196,16 +197,20 @@ func _unhandled_input(_event):
 	var tile_data: TileData
 	if Input.is_action_pressed("left"):
 		move(Vector2.LEFT)
+		$"../Move".play()
 	
 	if Input.is_action_pressed("right"):
 		move(Vector2.RIGHT)
+		$"../Move".play()
 	
 	if Input.is_action_pressed("down"):
 		move(Vector2.DOWN)
+		$"../Move".play()
 	
 	if Input.is_action_just_pressed("drop"):
 		while move(Vector2.DOWN):
 			continue
+		$"../Drop".play()
 		
 	if Input.is_action_just_pressed("save"):
 		clear_shape()
@@ -214,6 +219,7 @@ func _unhandled_input(_event):
 	if Input.is_action_just_pressed("rotate_right"):
 		var temp: PackedVector2Array
 		var band: bool
+		$"../Move".play()
 		for x in 4:
 			temp.append(shape_pos[x] + Vector2.LEFT)
 			if temp[x].x == 7:
@@ -225,6 +231,12 @@ func _unhandled_input(_event):
 			temp.append(shape_pos[x] + Vector2.RIGHT)
 			if temp[x].x == 18:
 				move(Vector2.LEFT)
+				band = false
+			continue
+		for x in 4:
+			temp.append(shape_pos[x] + Vector2.DOWN)
+			if temp[x].y == 17:
+				move(Vector2.UP)
 				band = false
 			continue
 		clear_shape()
@@ -242,3 +254,7 @@ func _unhandled_input(_event):
 				if temp[x].x == 17:
 					move(Vector2.RIGHT)
 					continue
+			for x in 4:
+				temp.append(shape_pos[x] + Vector2.DOWN)
+				if temp[x].y == 16:
+					move(Vector2.UP)
