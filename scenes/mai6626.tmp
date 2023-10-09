@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cfcanadl64oir"]
+[gd_scene load_steps=14 format=3 uid="uid://cfcanadl64oir"]
 
 [ext_resource type="Script" path="res://scripts/BlockFactory.gd" id="1_6d10o"]
 [ext_resource type="PackedScene" uid="uid://bct147xnyycqm" path="res://scenes/background.tscn" id="1_0842q"]
@@ -7,7 +7,6 @@
 [ext_resource type="AudioStream" uid="uid://c0qarbphe5l18" path="res://assets/SFX/hitHurt.wav" id="4_uigef"]
 [ext_resource type="AudioStream" uid="uid://ujcnquuy1srf" path="res://assets/SFX/powerUp.wav" id="5_8a2xu"]
 [ext_resource type="AudioStream" uid="uid://cc0sb5jkbdplj" path="res://assets/SFX/Ocarina_of_Time-Gerudo_Valley.WAV" id="6_4rfd4"]
-[ext_resource type="Texture2D" uid="uid://c5wtjj8cev85t" path="res://assets/Shapes/L.png" id="6_f4sbo"]
 [ext_resource type="Texture2D" uid="uid://kqcjd2xuth0n" path="res://assets/Shapes/I.png" id="8_vs62h"]
 [ext_resource type="Texture2D" uid="uid://cf4pnjhpu2sca" path="res://assets/Shapes/J.png" id="9_83tob"]
 [ext_resource type="Texture2D" uid="uid://cuv4igo8jmgro" path="res://assets/Shapes/O.png" id="10_fp36y"]
@@ -32,7 +31,7 @@ scale = Vector2(0.85, 0.85)
 
 [node name="Board" parent="." instance=ExtResource("1_w43hq")]
 position = Vector2(59, 12)
-shape_delay = 1.0
+shape_delay = null
 
 [node name="I1" type="Node2D" parent="Board"]
 visible = false
@@ -65,22 +64,6 @@ visible = false
 position = Vector2(734, 113)
 scale = Vector2(1.75, 1.75)
 texture = ExtResource("9_83tob")
-
-[node name="L1" type="Node2D" parent="Board"]
-visible = false
-scale = Vector2(1.75, 1.75)
-
-[node name="L1Sprite" type="Sprite2D" parent="Board/L1"]
-position = Vector2(55.4286, 62.8571)
-texture = ExtResource("6_f4sbo")
-
-[node name="L2" type="Node2D" parent="Board"]
-visible = false
-
-[node name="L2Sprite" type="Sprite2D" parent="Board/L2"]
-position = Vector2(737, 110)
-scale = Vector2(1.75, 1.75)
-texture = ExtResource("6_f4sbo")
 
 [node name="O1" type="Node2D" parent="Board"]
 visible = false
@@ -162,4 +145,3 @@ stream = ExtResource("6_4rfd4")
 autoplay = true
 
 [connection signal="texture_changed" from="Board/I1/I1Sprite" to="background" method="_on_i_1_texture_changed"]
-[connection signal="finished" from="Music1" to="Board" method="_on_music_1_finished"]

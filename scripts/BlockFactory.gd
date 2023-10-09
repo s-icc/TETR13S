@@ -13,42 +13,42 @@ var placed_blocks_atlas_coords = PackedVector2Array([
 
 var shapes = [
 	PackedVector2Array([Vector2(-1, 0), Vector2(0, 0), Vector2(1, 0), Vector2(2, 0)]), # I
-	PackedVector2Array([Vector2(0, 0), Vector2(0, 1), Vector2(1, 1), Vector2(2, 1)]), # J
+	PackedVector2Array([Vector2(0, 0), Vector2(-1, 0), Vector2(1, 0), Vector2(1, 1)]), # J
 	PackedVector2Array([Vector2(0, 0), Vector2(-2, 1), Vector2(-1, 1), Vector2(0, 1)]), # L
 	PackedVector2Array([Vector2(0, 0), Vector2(1, 0), Vector2(0, 1), Vector2(1, 1)]), # O
 	PackedVector2Array([Vector2(0, 0), Vector2(1, 0), Vector2(-1, 1), Vector2(0, 1)]), # S
 	PackedVector2Array([Vector2(0, 0), Vector2(-1, 1), Vector2(0, 1), Vector2(1, 1)]), # T
-	PackedVector2Array([Vector2(0, 0), Vector2(1, 0), Vector2(1, 1), Vector2(2, 1)]) # Z
+	PackedVector2Array([Vector2(0, 0), Vector2(-1, 0), Vector2(0, 1), Vector2(1, 1)]) # Z
 ]
 
 var shapes2 = [
 	PackedVector2Array([Vector2(0, 1), Vector2(0, 2), Vector2(0, 3), Vector2(0, 4)]), # I
-	PackedVector2Array([Vector2(0, 0), Vector2(1, 0), Vector2(0, 1), Vector2(0, 2)]), # J
+	PackedVector2Array([Vector2(0, 0), Vector2(0, -1), Vector2(0, 1), Vector2(-1, 1)]), # J
 	PackedVector2Array([Vector2(1, 2), Vector2(0, 0), Vector2(0, 1), Vector2(0, 2)]), # L
 	PackedVector2Array([Vector2(0, 0), Vector2(1, 0), Vector2(0, 1), Vector2(1, 1)]), # O
 	PackedVector2Array([Vector2(0, 0), Vector2(0, 1), Vector2(1, 1), Vector2(1, 2)]), # S
 	PackedVector2Array([Vector2(0, 0), Vector2(0, 1), Vector2(0, 2), Vector2(1, 1)]), # T
-	PackedVector2Array([Vector2(0, 0), Vector2(0, 1), Vector2(-1, 1), Vector2(-1, 2)]) # Z
+	PackedVector2Array([Vector2(0, 0), Vector2(-1, 0), Vector2(0, -1), Vector2(-1, 1)]) # Z
 ]
 
 var shapes3 = [
 	PackedVector2Array([Vector2(-1, 0), Vector2(0, 0), Vector2(1, 0), Vector2(2, 0)]), # I
-	PackedVector2Array([Vector2(0, 0), Vector2(1, 0), Vector2(2, 0), Vector2(2, 1)]), # J
+	PackedVector2Array([Vector2(0, 0), Vector2(-1, 0), Vector2(-1, -1), Vector2(1, 0)]), # J
 	PackedVector2Array([Vector2(0, 0), Vector2(1, 0), Vector2(2, 0), Vector2(0, 1)]), # L
 	PackedVector2Array([Vector2(0, 0), Vector2(1, 0), Vector2(0, 1), Vector2(1, 1)]), # O
 	PackedVector2Array([Vector2(0, 0), Vector2(1, 0), Vector2(-1, 1), Vector2(0, 1)]), # S
 	PackedVector2Array([Vector2(0, 0), Vector2(-1, 0), Vector2(1, 0), Vector2(0, 1)]), # T
-	PackedVector2Array([Vector2(0, 0), Vector2(1, 0), Vector2(1, 1), Vector2(2, 1)]) # Z
+	PackedVector2Array([Vector2(0, 0), Vector2(-1, 0), Vector2(0, 1), Vector2(1, 1)]) # Z
 ]
 
 var shapes4 = [
 	PackedVector2Array([Vector2(0, 1), Vector2(0, 2), Vector2(0, 3), Vector2(0, 4)]), # I
-	PackedVector2Array([Vector2(0, 0), Vector2(0, 1), Vector2(0, 2), Vector2(-1, 2)]), # J
+	PackedVector2Array([Vector2(0, 0), Vector2(0, -1), Vector2(1, -1), Vector2(0, 1)]), # J
 	PackedVector2Array([Vector2(0, 0), Vector2(-1, 0), Vector2(0, 1), Vector2(0, 2)]), # L
 	PackedVector2Array([Vector2(0, 0), Vector2(1, 0), Vector2(0, 1), Vector2(1, 1)]), # O
 	PackedVector2Array([Vector2(0, 0), Vector2(0, 1), Vector2(1, 1), Vector2(1, 2)]), # S
 	PackedVector2Array([Vector2(0, 0), Vector2(0, 1), Vector2(0, 2), Vector2(-1, 1)]), # T
-	PackedVector2Array([Vector2(0, 0), Vector2(0, 1), Vector2(-1, 1), Vector2(-1, 2)]) # Z
+	PackedVector2Array([Vector2(0, 0), Vector2(-1, 0), Vector2(0, -1), Vector2(-1, 1)]) # Z
 ]
 
 var blocks_atlas_coords = [
@@ -65,6 +65,9 @@ var shape
 var shape2
 var shapeInv
 var rotate = 0
+var sShape = 0
+var xShape = 0
+var rotShape
 
 func get_shape(type):
 	match type:
@@ -73,43 +76,82 @@ func get_shape(type):
 			if !shape2:
 				shape = shapes.pick_random()
 				shape2 = shapes.pick_random()
+				rotShape = shape
 			else:
 				shape = shape2
 				shape2 = shapes.pick_random()
+				rotShape = shape
 		1:
 			if !shapeInv:
-				shape2 = shapes.pick_random()
 				shapeInv = shape
 				shape = shape2
+				shape2 = shapes.pick_random()
+				rotShape = shape
+				rotate = 0
 			else:
-				var temp
-				temp = shape
+				var temp = shape
 				shape = shapeInv
 				shapeInv = temp
-				shape2 = shapes.pick_random()
+				rotShape = shape
+				rotate = 0
 		2:
-			if shape:
+			if rotShape:
 				rotate += 1
 				match rotate:
-					1: shape = shapes2[shapes.find(shape)]
-					2: shape = shapes3[shapes2.find(shape)]
-					3: shape = shapes4[shapes3.find(shape)]
+					1: rotShape = shapes2[shapes.find(rotShape)]
+					2: rotShape = shapes3[shapes2.find(rotShape)]
+					3: rotShape = shapes4[shapes3.find(rotShape)]
 					4: 
 						rotate = 0
-						shape = shapes[shapes4.find(shape)]
+						rotShape = shapes[shapes4.find(rotShape)]
+			return rotShape
 	return shape
 
 func get_block_atlas_coords():
 	match rotate:
-		0: return blocks_atlas_coords[shapes.find(shape)]
-		1: return blocks_atlas_coords[shapes2.find(shape)]
-		2: return blocks_atlas_coords[shapes3.find(shape)]
-		3: return blocks_atlas_coords[shapes4.find(shape)]
+		0: return blocks_atlas_coords[shapes.find(rotShape)]
+		1: return blocks_atlas_coords[shapes2.find(rotShape)]
+		2: return blocks_atlas_coords[shapes3.find(rotShape)]
+		3: return blocks_atlas_coords[shapes4.find(rotShape)]
 
 func get_placed_block_atlas_coords():
 	match rotate: 
-		0: return placed_blocks_atlas_coords[shapes.find(shape)]
-		1: return placed_blocks_atlas_coords[shapes2.find(shape)]
-		2: return placed_blocks_atlas_coords[shapes3.find(shape)]
-		3: return placed_blocks_atlas_coords[shapes4.find(shape)]
+		0: return placed_blocks_atlas_coords[shapes.find(rotShape)]
+		1: return placed_blocks_atlas_coords[shapes2.find(rotShape)]
+		2: return placed_blocks_atlas_coords[shapes3.find(rotShape)]
+		3: return placed_blocks_atlas_coords[shapes4.find(rotShape)]
 	
+
+func showShape(shape):
+	if shape2 == shapes[0]:
+		sShape = 1
+	elif shape2 == shapes[1]:
+		sShape = 2
+	elif shape2 == shapes[2]:
+		sShape = 3
+	elif shape2 == shapes[3]:
+		sShape = 4
+	elif shape2 == shapes[4]:
+		sShape = 5
+	elif shape2 == shapes[5]:
+		sShape = 6
+	elif shape2 == shapes[6]:
+		sShape = 7
+	return sShape
+	
+func showSavedShape(shapeX):
+	if shapeInv == shapes[0]:
+		xShape = 1
+	elif shapeInv == shapes[1]:
+		xShape = 2
+	elif shapeInv == shapes[2]:
+		xShape = 3
+	elif shapeInv == shapes[3]:
+		xShape = 4
+	elif shapeInv == shapes[4]:
+		xShape = 5
+	elif shapeInv == shapes[5]:
+		xShape = 6
+	elif shapeInv == shapes[6]:
+		xShape = 7
+	return xShape

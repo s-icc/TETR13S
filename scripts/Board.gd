@@ -34,6 +34,14 @@ func _ready():
 	spawn_shape(0)
 
 func spawn_shape(type):
+	$I2.hide()
+	$J2.hide()
+	$L2.hide()
+	$O2.hide()
+	$S2.hide()
+	$T2.hide()
+	$Z2.hide()
+	
 	var tile_data: TileData
 	
 	shape_pos.clear() # limpia la posicion de la figura en el tablero
@@ -62,6 +70,15 @@ func spawn_shape(type):
 	
 	# inicia un temporizador con 1 segundo
 	timer.start(shape_delay)
+	var shown = block_fact.showShape(shape)
+	match shown:
+		1: $I2.show()
+		2: $J2.show()
+		3: $L2.show()
+		4: $O2.show()
+		5: $S2.show()
+		6: $T2.show()
+		7: $Z2.show()
 
 func _physics_process(_delta):
 	if !shape:
@@ -212,9 +229,26 @@ func _unhandled_input(_event):
 			continue
 		$"../Drop".play()
 		
+		
 	if Input.is_action_just_pressed("save"):
 		clear_shape()
 		spawn_shape(1)
+		var numb = block_fact.showSavedShape(shape)
+		$I1.hide()
+		$J1.hide()
+		$L1.hide()
+		$O1.hide()
+		$S1.hide()
+		$T1.hide()
+		$Z1.hide()
+		match numb:
+			1: $I1.show()
+			2: $J1.show()
+			3: $L1.show()
+			4: $O1.show()
+			5: $S1.show()
+			6: $T1.show()
+			7: $Z1.show()
 	
 	if Input.is_action_just_pressed("rotate_right"):
 		var temp: PackedVector2Array
@@ -239,6 +273,12 @@ func _unhandled_input(_event):
 				move(Vector2.UP)
 				band = false
 			continue
+		for x in 4:
+			temp.append(shape_pos[x] + Vector2.UP)
+			if temp[x].y == 1:
+				move(Vector2.DOWN)
+				band = false
+			continue
 		clear_shape()
 		spawn_shape(2)
 		temp.clear()
@@ -258,3 +298,13 @@ func _unhandled_input(_event):
 				temp.append(shape_pos[x] + Vector2.DOWN)
 				if temp[x].y == 16:
 					move(Vector2.UP)
+					continue
+			for x in 4:
+				temp.append(shape_pos[x] + Vector2.UP)
+				if temp[x].y == 5:
+					move(Vector2.UP)
+					continue
+
+
+func _on_music_1_finished():
+	$"../Music1".play()
