@@ -1,7 +1,7 @@
-[gd_scene load_steps=15 format=3 uid="uid://cfcanadl64oir"]
+[gd_scene load_steps=19 format=3 uid="uid://cfcanadl64oir"]
 
-[ext_resource type="Script" path="res://scripts/BlockFactory.gd" id="1_6d10o"]
 [ext_resource type="PackedScene" uid="uid://bct147xnyycqm" path="res://scenes/background.tscn" id="1_0842q"]
+[ext_resource type="Script" path="res://scripts/Main.gd" id="1_j521j"]
 [ext_resource type="PackedScene" uid="uid://c8lt7f5n5udf6" path="res://scenes/board.tscn" id="1_w43hq"]
 [ext_resource type="AudioStream" uid="uid://dq5fbs74jvuj4" path="res://assets/SFX/blipSelect.wav" id="3_gsp8e"]
 [ext_resource type="AudioStream" uid="uid://c0qarbphe5l18" path="res://assets/SFX/hitHurt.wav" id="4_uigef"]
@@ -14,16 +14,47 @@
 [ext_resource type="Texture2D" uid="uid://ltvfxbhl4bm" path="res://assets/Shapes/S.png" id="11_3nifk"]
 [ext_resource type="Texture2D" uid="uid://c8nhsrpnw3q1h" path="res://assets/Shapes/T.png" id="12_sbdqr"]
 [ext_resource type="Texture2D" uid="uid://cuwa8lw1u2wmx" path="res://assets/Shapes/Z.png" id="13_f2tay"]
+[ext_resource type="Material" uid="uid://bntwnyvxpgbv7" path="res://shaders/crt_shader.tres" id="15_duyvi"]
+
+[sub_resource type="Animation" id="Animation_am7fc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera2D:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_mc3a3"]
+resource_name = "cam_shake"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera2D:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-10, -10), Vector2(10, -10), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vlpk2"]
+_data = {
+"RESET": SubResource("Animation_am7fc"),
+"cam_shake": SubResource("Animation_mc3a3")
+}
 
 [node name="Main" type="Node2D"]
-script = ExtResource("1_6d10o")
-
-[node name="ColorRect" type="ColorRect" parent="."]
-offset_left = -11.0
-offset_top = -9.0
-offset_right = 973.0
-offset_bottom = 612.0
-color = Color(0.321569, 0.423529, 0.490196, 1)
+script = ExtResource("1_j521j")
 
 [node name="background" parent="." instance=ExtResource("1_0842q")]
 modulate = Color(0.380392, 0.380392, 0.380392, 1)
@@ -31,8 +62,8 @@ position = Vector2(474, 304)
 scale = Vector2(0.85, 0.85)
 
 [node name="Board" parent="." instance=ExtResource("1_w43hq")]
-position = Vector2(59, 12)
-shape_delay = 1.0
+position = Vector2(133, 66)
+scale = Vector2(0.861041, 0.861041)
 
 [node name="I1" type="Node2D" parent="Board"]
 visible = false
@@ -160,6 +191,21 @@ stream = ExtResource("5_8a2xu")
 [node name="Music1" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("6_4rfd4")
 autoplay = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(480, 300)
+
+[node name="AnimationCamera" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_vlpk2")
+}
+
+[node name="CRT-Shader" type="ColorRect" parent="."]
+material = ExtResource("15_duyvi")
+offset_left = -80.0
+offset_top = -64.0
+offset_right = 1072.0
+offset_bottom = 640.0
 
 [connection signal="texture_changed" from="Board/I1/I1Sprite" to="background" method="_on_i_1_texture_changed"]
 [connection signal="finished" from="Music1" to="Board" method="_on_music_1_finished"]

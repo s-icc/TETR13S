@@ -4,17 +4,23 @@ class_name Board
 @onready var tile_map = $TileMap
 @onready var timer = $Timer
 @export var shape_delay: float = 1
+@export var row_delete_delay: float = 0.2
+@export var block_delete_delay: float = 0.05
 
-var block_fact = BlockFactory.new()
+var main_scene: Main
+var block_fact = ShapeFactory.new()
 var shape: PackedVector2Array
 var block_atlas_coords: PackedVector2Array
 var shape_pos: PackedVector2Array
 var anchor_point_pos: Vector2
 var middle_tile: int
+var placed_shape
 var tile_num_width
 var tile_map_scale
 var blank_tile_pos
 var BOARD_BOUNDS = PackedVector2Array([Vector2(8, 1), Vector2(17, 16)])
+var BOARD_WIDTH = 10
+var BOARD_HEIGHT = 16
 enum Block_Type {
 	BLANK = 0,
 	WALL = 1,
@@ -25,10 +31,9 @@ enum Block_Type {
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	main_scene = get_parent()
 	tile_num_width = tile_map.get_used_rect().size.x
-	print(tile_num_width)
 	tile_map_scale = tile_map.scale
-	print(tile_map_scale)
 	middle_tile = tile_num_width / 2 - 1
 	blank_tile_pos = Vector2(9, 3) # posicion de celda vacia en tilemap
 	spawn_shape(0)
@@ -44,6 +49,7 @@ func spawn_shape(type):
 	
 	var tile_data: TileData
 	
+	placed_shape = false
 	shape_pos.clear() # limpia la posicion de la figura en el tablero
 	shape = block_fact.get_shape(type)
 	block_atlas_coords = block_fact.get_block_atlas_coords()
@@ -97,31 +103,42 @@ func move(direction):
 	# itera cada bloque de la figura para verificar su siguiente posicion
 	for block_pos in shape_pos.size():
 		new_pos.append(shape_pos[block_pos] + direction)
-		new_tile_data = tile_map.get_cell_tile_data(0, new_pos[block_pos])
+	
+	var is_valid = is_valid_position(new_pos, direction)
+	
+	if is_valid and !placed_shape:
+		# una vez verificado que se puede mover a la siguiente posicion
+		clear_shape()
+		
+		# y se vuelve a pinar la figura pero en su nueva posicion
+		for n in new_pos.size():
+			set_tile(new_pos[n], block_atlas_coords[n])
+			shape_pos[n] = new_pos[n]
+			
+			# actualiza la posicion del bloque con punto de ancla
+			if shape[n] == Vector2.ZERO:
+				anchor_point_pos = shape_pos[n]
+	
+	return is_valid
+
+func is_valid_position(new_shape_position, direction):
+	var new_tile_data: TileData
+	
+	for block_pos in new_shape_position:
+		new_tile_data = tile_map.get_cell_tile_data(0, block_pos)
 		
 		match new_tile_data.get_custom_data_by_layer_id(0):
-			Block_Type.WALL:
-				return true
 			Block_Type.FLOOR:
 				if direction == Vector2.DOWN:
+					placed_shape = true
+					# posiciona la figura como piso
 					set_shape_as_floor()
 					check_board_rows()
-					spawn_shape(0)
-					return false
-				
-				return true
-	
-	# una vez verificado que se puede mover a la siguiente posicion
-	clear_shape()
-	
-	# y se vuelve a pinar la figura pero en su nueva posicion
-	for n in new_pos.size():
-		set_tile(new_pos[n], block_atlas_coords[n])
-		shape_pos[n] = new_pos[n]
-		
-		# actualiza la posicion del bloque con punto de ancla
-		if shape[n] == Vector2.ZERO:
-			anchor_point_pos = shape_pos[n]
+				return false
+			Block_Type.WALL:
+				return false
+			Block_Type.CEILING:
+				return false
 	
 	return true
 
@@ -147,7 +164,7 @@ func check_board_rows():
 	var board = get_board()
 	var completed_rows: Array
 	var tile_data: TileData
-	var empty_row = BOARD_BOUNDS[1].y + 1
+	var empty_row = BOARD_HEIGHT + 1
 	
 	for row in board.size():
 		var has_blank_block = false
@@ -171,14 +188,43 @@ func check_board_rows():
 		# guarda la posicion de la fila llena
 		completed_rows.append(row)
 	
-	var cell_atlas_coords
-	var cell_tile_data: TileData
+	if !completed_rows.is_empty():
+		set_physics_process(false)
+		await clear_rows(completed_rows, empty_row)
+		set_physics_process(true)
+	
+	spawn_shape(0)
+	return
+
+func clear_rows(completed_rows: Array, empty_row):
 	var cell_pos
+	
+	$"../Line".set_pitch_scale(1.0)
+	
+	for cell in BOARD_WIDTH:
+		for completed_row in completed_rows:
+			# obtiene la posicion de la celda en el tile map
+			cell_pos = Vector2(BOARD_BOUNDS[0].x + cell, BOARD_BOUNDS[0].y + completed_row)
+			set_tile(cell_pos, blank_tile_pos)
+		
+		$"../Line".set_pitch_scale($"../Line".pitch_scale + cell * 0.05)
+		$"../Line".play()
+		await get_tree().create_timer(block_delete_delay).timeout
+	
+	$"../Line".set_pitch_scale(1.0)
+	
+	await get_tree().create_timer(row_delete_delay).timeout
+	move_rows(completed_rows, empty_row)
+	await main_scene.shake_camera()
+
+func move_rows(completed_rows: Array, empty_row):
+	var cell_pos
+	var cell_atlas_coords
 	
 	for completed_row in completed_rows:
 		# en el rango desede la fila completada hasta la primer fila vacia
-		for row in range(completed_row, empty_row, -1):
-			for cell in board[row].size():
+		for row in range(completed_row, empty_row - 1, -1):
+			for cell in BOARD_WIDTH:
 				# obtiene la posicion de la celda en el tile map
 				cell_pos = Vector2(BOARD_BOUNDS[0].x + cell, BOARD_BOUNDS[0].y + row)
 				

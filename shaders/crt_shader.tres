@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://bntwnyvxpgbv7"]
+
+[ext_resource type="Shader" path="res://shaders/crt.gdshader" id="1_v2emx"]
+
+[resource]
+shader = ExtResource("1_v2emx")
+shader_parameter/scanline_count = 60.0

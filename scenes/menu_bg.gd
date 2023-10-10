@@ -5,10 +5,6 @@ extends Node2D
 func _ready():
 	$Sprite2D/AnimationPlayer.play("Animation")
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
 func _on_button_2_pressed():
 	get_tree().quit()
 	

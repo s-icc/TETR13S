@@ -1,5 +1,5 @@
 extends Node
-class_name BlockFactory
+class_name ShapeFactory
 
 var placed_blocks_atlas_coords = PackedVector2Array([
 	Vector2(0, 0), # I

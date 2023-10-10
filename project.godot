@@ -23,6 +23,7 @@ Shared="*res://scripts/shared.gd"
 
 window/size/viewport_width=960
 window/size/viewport_height=600
+window/size/resizable=false
 
 [dotnet]
 
