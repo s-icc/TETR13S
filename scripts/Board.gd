@@ -69,8 +69,8 @@ func spawn_shape(type):
 		
 		tile_data = tile_map.get_cell_tile_data(0, shape_pos[n])
 		if tile_data.get_custom_data_by_layer_id(0) == Block_Type.FLOOR:
-			# TODO: game over
-			get_tree().quit()
+			$SceneTransition.change_scene("res://scenes/game_over.tscn")
+			# get_tree().quit()
 		
 		tile_map.set_cell(0, shape_pos[n], 4, block_atlas_coords[n])
 	
