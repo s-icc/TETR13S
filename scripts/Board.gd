@@ -23,10 +23,11 @@ var BOARD_WIDTH = 10
 var BOARD_HEIGHT = 16
 enum Block_Type {
 	BLANK = 0,
-	WALL = 1,
+	LEFT_WALL = 1,
 	FLOOR = 2,
-	BLOCK = 3,
-	CEILING = 4
+	RIGHT_WALL = 3,
+	CEILING = 4,
+	BLOCK = 5
 }
 
 # Called when the node enters the scene tree for the first time.
@@ -38,6 +39,15 @@ func _ready():
 	blank_tile_pos = Vector2(9, 3) # posicion de celda vacia en tilemap
 	spawn_shape(0)
 
+func _physics_process(_delta):
+	if !shape:
+		return
+	
+	# al acabar el tiempo, mueve la figura una posicion abajo
+	if timer.time_left == 0:
+		move(Vector2.DOWN)
+		timer.start(shape_delay)
+
 func spawn_shape(type):
 	$I2.hide()
 	$J2.hide()
@@ -46,8 +56,6 @@ func spawn_shape(type):
 	$S2.hide()
 	$T2.hide()
 	$Z2.hide()
-	
-	var tile_data: TileData
 	
 	placed_shape = false
 	shape_pos.clear() # limpia la posicion de la figura en el tablero
@@ -59,20 +67,30 @@ func spawn_shape(type):
 		if type != 2:
 			# guarda la posicion de la figura en el tablero para el movimiento
 			shape_pos.append(shape[n] + Vector2(middle_tile, 1))
-			
-			# se guarda la posicion en el tablero del bloque con el punto de ancla
-			if shape[n] == Vector2.ZERO:
-				anchor_point_pos = shape_pos[n]
-			
-		elif anchor_point_pos:
+			continue
+		
+		if anchor_point_pos:
 			shape_pos.append(shape[n] + anchor_point_pos)
-		
-		tile_data = tile_map.get_cell_tile_data(0, shape_pos[n])
-		if tile_data.get_custom_data_by_layer_id(0) == Block_Type.FLOOR:
-			$SceneTransition.change_scene("res://scenes/game_over.tscn")
-			# get_tree().quit()
-		
-		tile_map.set_cell(0, shape_pos[n], 4, block_atlas_coords[n])
+	
+	# mover la posicion de la figura hasta que sea valida
+	if type == 2 and !is_valid_position(shape_pos, Vector2.ZERO):
+		# intentar mover hacia abajo
+		while collides(shape_pos, Block_Type.CEILING):
+			shape_pos = translate_position(Vector2.DOWN)
+		# intentar mover a la derecha
+		while collides(shape_pos, Block_Type.LEFT_WALL):
+			shape_pos = translate_position(Vector2.RIGHT)
+		# intentar mover a la izquierda
+		while collides(shape_pos, Block_Type.RIGHT_WALL):
+			shape_pos = translate_position(Vector2.LEFT)
+		# mover hacia arriba
+		while collides(shape_pos, Block_Type.FLOOR):
+			shape_pos = translate_position(Vector2.UP)
+	
+	print_shape()
+	
+	if collides(shape_pos, Block_Type.FLOOR):
+		$SceneTransition.change_scene("res://scenes/game_over.tscn")
 	
 	# inicia un temporizador con 1 segundo
 	timer.start(shape_delay)
@@ -86,59 +104,68 @@ func spawn_shape(type):
 		6: $T2.show()
 		7: $Z2.show()
 
-func _physics_process(_delta):
-	if !shape:
-		return
-	
-	# al acabar el tiempo, mueve la figura una posicion abajo
-	if timer.time_left == 0:
-		move(Vector2.DOWN)
-		timer.start(shape_delay)
+func print_shape():
+	for block_pos in shape_pos.size():
+		set_tile(shape_pos[block_pos], block_atlas_coords[block_pos])
+		
+		# actualiza la posicion del bloque con punto de ancla
+		if shape[block_pos] == Vector2.ZERO:
+			anchor_point_pos = shape_pos[block_pos]
 
-func move(direction):
-	var new_pos: PackedVector2Array
-	var new_tile_data: TileData
+func collides(shape_position, block_type):
 	var tile_data: TileData
 	
-	# itera cada bloque de la figura para verificar su siguiente posicion
-	for block_pos in shape_pos.size():
-		new_pos.append(shape_pos[block_pos] + direction)
-	
+	for block_position in shape_position:
+		tile_data = tile_map.get_cell_tile_data(0, block_position)
+		
+		# si el tile data es nulo, significa que la posicion esta fuera del tablero
+		if !tile_data:
+			continue
+		
+		if tile_data.get_custom_data_by_layer_id(0) == block_type:
+			return true
+	return false
+
+func move(direction):
+	var new_pos = translate_position(direction)
 	var is_valid = is_valid_position(new_pos, direction)
 	
 	if is_valid and !placed_shape:
 		# una vez verificado que se puede mover a la siguiente posicion
 		clear_shape()
-		
-		# y se vuelve a pinar la figura pero en su nueva posicion
-		for n in new_pos.size():
-			set_tile(new_pos[n], block_atlas_coords[n])
-			shape_pos[n] = new_pos[n]
-			
-			# actualiza la posicion del bloque con punto de ancla
-			if shape[n] == Vector2.ZERO:
-				anchor_point_pos = shape_pos[n]
+		# ocupamos actualizar la posicion de la figura para poder pintarla
+		# en la nueva posicion
+		shape_pos = new_pos
+		# y se vuelve a pintar la figura pero en su nueva posicion
+		print_shape()
 	
 	return is_valid
 
-func is_valid_position(new_shape_position, direction):
-	var new_tile_data: TileData
+func translate_position(direction):
+	var new_position: PackedVector2Array
 	
-	for block_pos in new_shape_position:
-		new_tile_data = tile_map.get_cell_tile_data(0, block_pos)
-		
-		match new_tile_data.get_custom_data_by_layer_id(0):
-			Block_Type.FLOOR:
-				if direction == Vector2.DOWN:
-					placed_shape = true
-					# posiciona la figura como piso
-					set_shape_as_floor()
-					check_board_rows()
-				return false
-			Block_Type.WALL:
-				return false
-			Block_Type.CEILING:
-				return false
+	# itera cada bloque de la figura para verificar su siguiente posicion
+	for block_pos in shape_pos:
+		new_position.append(block_pos + direction)
+	
+	return new_position
+
+func is_valid_position(shape_position, direction):
+	var tile_data: TileData
+	
+	if collides(shape_position, Block_Type.FLOOR):
+		if direction == Vector2.DOWN:
+			placed_shape = true
+			# posiciona la figura como piso
+			set_shape_as_floor()
+			check_board_rows()
+		return false
+	
+	if collides(shape_position, Block_Type.LEFT_WALL) or collides(shape_position, Block_Type.RIGHT_WALL):
+		return false
+	
+	if collides(shape_position, Block_Type.CEILING):
+		return false
 	
 	return true
 
@@ -146,19 +173,17 @@ func set_tile(tile_pos, atlas_pos):
 	tile_map.set_cell(0, tile_pos, 4, atlas_pos)
 
 func clear_shape():
-	for n in shape_pos.size():
+	for block_pos in shape_pos:
 		# se limpian las celdas actuales de la figura
-		set_tile(shape_pos[n], blank_tile_pos)
+		set_tile(block_pos, blank_tile_pos)
 
 func set_shape_as_floor():
-	var pos: PackedVector2Array
-	var tile_data: TileData
 	var placed_block = block_fact.get_placed_block_atlas_coords()
 	
 	# recorre cada bloque de la figura
 	for block_pos in shape_pos:
 		# asigna a la posicion actual del bloque, otro bloque pero de tipo FLOOR
-		tile_map.set_cell(0, block_pos, 4, placed_block)
+		set_tile(block_pos, placed_block)
 
 func check_board_rows():
 	var board = get_board()
@@ -297,6 +322,9 @@ func _unhandled_input(_event):
 			7: $Z1.show()
 	
 	if Input.is_action_just_pressed("rotate_right"):
+		clear_shape()
+		spawn_shape(2)
+		"""
 		var temp: PackedVector2Array
 		var band: bool
 		$"../Move".play()
@@ -350,6 +378,7 @@ func _unhandled_input(_event):
 				if temp[x].y == 5:
 					move(Vector2.UP)
 					continue
+		"""
 
 
 func _on_music_1_finished():

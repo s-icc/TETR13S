@@ -22,7 +22,7 @@ var shapes = [
 ]
 
 var shapes2 = [
-	PackedVector2Array([Vector2(0, 1), Vector2(0, 2), Vector2(0, 3), Vector2(0, 4)]), # I
+	PackedVector2Array([Vector2(0, -1), Vector2(0, 0), Vector2(0, 1), Vector2(0, 2)]), # I
 	PackedVector2Array([Vector2(0, 0), Vector2(0, -1), Vector2(0, 1), Vector2(-1, 1)]), # J
 	PackedVector2Array([Vector2(1, 2), Vector2(0, 0), Vector2(0, 1), Vector2(0, 2)]), # L
 	PackedVector2Array([Vector2(0, 0), Vector2(1, 0), Vector2(0, 1), Vector2(1, 1)]), # O
@@ -42,7 +42,7 @@ var shapes3 = [
 ]
 
 var shapes4 = [
-	PackedVector2Array([Vector2(0, 1), Vector2(0, 2), Vector2(0, 3), Vector2(0, 4)]), # I
+	PackedVector2Array([Vector2(0, -1), Vector2(0, 0), Vector2(0, 1), Vector2(0, 2)]), # I
 	PackedVector2Array([Vector2(0, 0), Vector2(0, -1), Vector2(1, -1), Vector2(0, 1)]), # J
 	PackedVector2Array([Vector2(0, 0), Vector2(-1, 0), Vector2(0, 1), Vector2(0, 2)]), # L
 	PackedVector2Array([Vector2(0, 0), Vector2(1, 0), Vector2(0, 1), Vector2(1, 1)]), # O
