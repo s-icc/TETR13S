@@ -5,7 +5,7 @@ class_name Board
 @onready var timer = $Timer
 @export var shape_delay: float = 1
 @export var row_delete_delay: float = 0.2
-@export var block_delete_delay: float = 0.05
+@export var block_delete_delay: float = 0.04
 
 var main_scene: Main
 var block_fact = ShapeFactory.new()
@@ -29,6 +29,7 @@ enum Block_Type {
 	CEILING = 4,
 	BLOCK = 5
 }
+@onready var score_system = $"../ScoreSystem" as ScoreSystem
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -72,8 +73,15 @@ func spawn_shape(type):
 		if anchor_point_pos:
 			shape_pos.append(shape[n] + anchor_point_pos)
 	
+	if type != 2:
+		# inicia un temporizador con el delay establecido
+		timer.start(shape_delay)		
+	
 	# mover la posicion de la figura hasta que sea valida
-	if type == 2 and !is_valid_position(shape_pos, Vector2.ZERO):
+	elif !is_valid_position(shape_pos, Vector2.ZERO):
+		# mover hacia arriba
+		while collides(shape_pos, Block_Type.FLOOR):
+			shape_pos = translate_position(Vector2.UP)
 		# intentar mover hacia abajo
 		while collides(shape_pos, Block_Type.CEILING):
 			shape_pos = translate_position(Vector2.DOWN)
@@ -83,17 +91,7 @@ func spawn_shape(type):
 		# intentar mover a la izquierda
 		while collides(shape_pos, Block_Type.RIGHT_WALL):
 			shape_pos = translate_position(Vector2.LEFT)
-		# mover hacia arriba
-		while collides(shape_pos, Block_Type.FLOOR):
-			shape_pos = translate_position(Vector2.UP)
 	
-	print_shape()
-	
-	if collides(shape_pos, Block_Type.FLOOR):
-		$SceneTransition.change_scene("res://scenes/game_over.tscn")
-	
-	# inicia un temporizador con 1 segundo
-	timer.start(shape_delay)
 	var shown = block_fact.showShape(shape)
 	match shown:
 		1: $I2.show()
@@ -103,6 +101,11 @@ func spawn_shape(type):
 		5: $S2.show()
 		6: $T2.show()
 		7: $Z2.show()
+	
+	if collides(shape_pos, Block_Type.FLOOR):
+		$SceneTransition.change_scene("res://scenes/game_over.tscn")
+	
+	print_shape()
 
 func print_shape():
 	for block_pos in shape_pos.size():
@@ -240,6 +243,7 @@ func clear_rows(completed_rows: Array, empty_row):
 	
 	await get_tree().create_timer(row_delete_delay).timeout
 	move_rows(completed_rows, empty_row)
+	score_system.combo(completed_rows.size())
 	await main_scene.shake_camera()
 
 func move_rows(completed_rows: Array, empty_row):
@@ -324,62 +328,6 @@ func _unhandled_input(_event):
 	if Input.is_action_just_pressed("rotate_right"):
 		clear_shape()
 		spawn_shape(2)
-		"""
-		var temp: PackedVector2Array
-		var band: bool
-		$"../Move".play()
-		for x in 4:
-			temp.append(shape_pos[x] + Vector2.LEFT)
-			if temp[x].x == 7:
-				move(Vector2.RIGHT)
-				band = false
-			continue
-		temp.clear()
-		for x in 4:
-			temp.append(shape_pos[x] + Vector2.RIGHT)
-			if temp[x].x == 18:
-				move(Vector2.LEFT)
-				band = false
-			continue
-		for x in 4:
-			temp.append(shape_pos[x] + Vector2.DOWN)
-			if temp[x].y == 17:
-				move(Vector2.UP)
-				band = false
-			continue
-		for x in 4:
-			temp.append(shape_pos[x] + Vector2.UP)
-			if temp[x].y == 1:
-				move(Vector2.DOWN)
-				band = false
-			continue
-		clear_shape()
-		spawn_shape(2)
-		temp.clear()
-		if !band:
-			for x in 4:
-				temp.append(shape_pos[x] + Vector2.LEFT)
-				if temp[x].x == 8:
-					move(Vector2.LEFT)
-					continue
-			temp.clear()
-			for x in 4:
-				temp.append(shape_pos[x] + Vector2.RIGHT)
-				if temp[x].x == 17:
-					move(Vector2.RIGHT)
-					continue
-			for x in 4:
-				temp.append(shape_pos[x] + Vector2.DOWN)
-				if temp[x].y == 16:
-					move(Vector2.UP)
-					continue
-			for x in 4:
-				temp.append(shape_pos[x] + Vector2.UP)
-				if temp[x].y == 5:
-					move(Vector2.UP)
-					continue
-		"""
-
 
 func _on_music_1_finished():
 	$"../Music1".play()

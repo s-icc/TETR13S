@@ -1031,7 +1031,6 @@ _data = {
 
 [node name="Board" type="Node2D"]
 script = ExtResource("1_72cw6")
-block_delete_delay = 0.04
 
 [node name="TileMap" type="TileMap" parent="."]
 position = Vector2(-1.90735e-06, 0)

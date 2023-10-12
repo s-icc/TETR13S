@@ -61,6 +61,7 @@ var blocks_atlas_coords = [
 	PackedVector2Array([Vector2(0, 1), Vector2(1, 1), Vector2(1, 2), Vector2(2, 2)]) # Z
 ]
 
+static var instance = ShapeFactory.new()
 var shape
 var shape2
 var shapeInv
@@ -68,6 +69,9 @@ var rotate = 0
 var sShape = 0
 var xShape = 0
 var rotShape
+
+static func get_instance():
+	return instance
 
 func get_shape(type):
 	match type:
