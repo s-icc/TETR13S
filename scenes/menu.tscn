@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://heth2n11cgkn"]
+[gd_scene load_steps=19 format=3 uid="uid://heth2n11cgkn"]
 
 [ext_resource type="PackedScene" uid="uid://xjgrjs8vubvp" path="res://scenes/menu_bg.tscn" id="1_3ngmc"]
 [ext_resource type="Script" path="res://scripts/menu.gd" id="1_r4n2w"]
@@ -9,7 +9,6 @@
 [ext_resource type="Texture2D" uid="uid://bm1du1w1hfxs0" path="res://assets/Resources/playOFF.png" id="4_t0hjs"]
 [ext_resource type="Texture2D" uid="uid://biwv1cpeg5x0e" path="res://assets/Resources/exitOFF.png" id="6_50k0l"]
 [ext_resource type="AudioStream" uid="uid://co0arjttjjlti" path="res://assets/SFX/gb_tetris_theme_a.WAV" id="8_fhdq4"]
-[ext_resource type="Material" uid="uid://bntwnyvxpgbv7" path="res://shaders/crt_shader.tres" id="9_eqbpa"]
 [ext_resource type="Script" path="res://addons/discord-sdk-gd/example.gd" id="10_b5ecn"]
 
 [sub_resource type="Animation" id="Animation_nge70"]
@@ -73,20 +72,13 @@ libraries = {
 stream = ExtResource("8_fhdq4")
 autoplay = true
 
-[node name="CRT-Shader" type="ColorRect" parent="."]
-material = ExtResource("9_eqbpa")
-offset_left = -15.0
-offset_top = -8.0
-offset_right = 1137.0
-offset_bottom = 696.0
-scale = Vector2(0.933538, 0.90673)
-
 [node name="Button2" type="Button" parent="."]
 offset_left = 409.0
 offset_top = 349.0
 offset_right = 917.0
 offset_bottom = 607.0
 scale = Vector2(0.3, 0.3)
+mouse_default_cursor_shape = 2
 theme_override_styles/normal = SubResource("StyleBoxTexture_t88yi")
 theme_override_styles/hover = SubResource("StyleBoxTexture_wsr42")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_clmko")
@@ -97,6 +89,7 @@ offset_top = 246.0
 offset_right = 917.0
 offset_bottom = 504.0
 scale = Vector2(0.3, 0.3)
+mouse_default_cursor_shape = 2
 theme_override_styles/normal = SubResource("StyleBoxTexture_88oeo")
 theme_override_styles/hover = SubResource("StyleBoxTexture_vo5y2")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_6ga56")

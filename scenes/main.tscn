@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://cfcanadl64oir"]
+[gd_scene load_steps=21 format=3 uid="uid://cfcanadl64oir"]
 
 [ext_resource type="PackedScene" uid="uid://bct147xnyycqm" path="res://scenes/background.tscn" id="1_0842q"]
 [ext_resource type="Script" path="res://scripts/Main.gd" id="1_j521j"]
@@ -14,7 +14,6 @@
 [ext_resource type="Texture2D" uid="uid://ltvfxbhl4bm" path="res://assets/Shapes/S.png" id="11_3nifk"]
 [ext_resource type="Texture2D" uid="uid://c8nhsrpnw3q1h" path="res://assets/Shapes/T.png" id="12_sbdqr"]
 [ext_resource type="Texture2D" uid="uid://cuwa8lw1u2wmx" path="res://assets/Shapes/Z.png" id="13_f2tay"]
-[ext_resource type="Material" uid="uid://bntwnyvxpgbv7" path="res://shaders/crt_shader.tres" id="15_duyvi"]
 [ext_resource type="FontFile" uid="uid://dup13uxxpsdap" path="res://fonts/PublicPixel-z84yD.ttf" id="15_uu7k8"]
 [ext_resource type="Script" path="res://scripts/Label.gd" id="16_4g4pl"]
 [ext_resource type="Script" path="res://scripts/ScoreSystem.gd" id="18_nhtir"]
@@ -228,13 +227,6 @@ theme_override_font_sizes/font_size = 20
 text = "0"
 uppercase = true
 script = ExtResource("16_4g4pl")
-
-[node name="CRT-Shader" type="ColorRect" parent="."]
-material = ExtResource("15_duyvi")
-offset_left = -80.0
-offset_top = -64.0
-offset_right = 1072.0
-offset_bottom = 640.0
 
 [connection signal="texture_changed" from="Board/I1/I1Sprite" to="background" method="_on_i_1_texture_changed"]
 [connection signal="finished" from="Music1" to="Board" method="_on_music_1_finished"]

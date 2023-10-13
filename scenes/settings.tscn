@@ -1,0 +1,60 @@
+[gd_scene load_steps=3 format=3 uid="uid://cfuyg46k1fxhw"]
+
+[ext_resource type="Script" path="res://scripts/Settings.gd" id="1_12tfk"]
+[ext_resource type="FontFile" uid="uid://dup13uxxpsdap" path="res://fonts/PublicPixel-z84yD.ttf" id="1_ttax8"]
+
+[node name="settings" type="Node2D"]
+script = ExtResource("1_12tfk")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 960.0
+offset_bottom = 600.0
+color = Color(0.2, 0.176471, 0.176471, 1)
+
+[node name="Title" type="Label" parent="ColorRect"]
+layout_mode = 2
+offset_left = 128.0
+offset_top = 96.0
+offset_right = 464.0
+offset_bottom = 128.0
+theme_override_fonts/font = ExtResource("1_ttax8")
+theme_override_font_sizes/font_size = 29
+text = "Settings"
+uppercase = true
+
+[node name="CRT Effect" type="Label" parent="ColorRect"]
+layout_mode = 2
+offset_left = 160.0
+offset_top = 224.0
+offset_right = 352.0
+offset_bottom = 243.0
+theme_override_fonts/font = ExtResource("1_ttax8")
+text = "crt effect"
+uppercase = true
+
+[node name="Chkbox CRT" type="CheckBox" parent="ColorRect"]
+layout_mode = 2
+offset_left = 448.0
+offset_top = 224.0
+offset_right = 472.0
+offset_bottom = 248.0
+
+[node name="Camera Shake" type="Label" parent="ColorRect"]
+layout_mode = 2
+offset_left = 160.0
+offset_top = 288.0
+offset_right = 352.0
+offset_bottom = 307.0
+theme_override_fonts/font = ExtResource("1_ttax8")
+text = "Camera Shake"
+uppercase = true
+
+[node name="Chkbox Shake" type="CheckBox" parent="ColorRect"]
+layout_mode = 2
+offset_left = 448.0
+offset_top = 288.0
+offset_right = 472.0
+offset_bottom = 312.0
+
+[connection signal="pressed" from="ColorRect/Chkbox CRT" to="." method="_on_check_box_pressed"]
+[connection signal="pressed" from="ColorRect/Chkbox Shake" to="." method="_on_chkbox_shake_pressed"]

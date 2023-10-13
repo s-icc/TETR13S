@@ -1,6 +1,7 @@
 extends Node2D
 class_name Board
 
+@onready var globals = get_node("/root/Globals")
 @onready var tile_map = $TileMap
 @onready var timer = $Timer
 @export var shape_delay: float = 1
@@ -244,7 +245,8 @@ func clear_rows(completed_rows: Array, empty_row):
 	await get_tree().create_timer(row_delete_delay).timeout
 	move_rows(completed_rows, empty_row)
 	score_system.combo(completed_rows.size())
-	await main_scene.shake_camera()
+	if globals.can_shake:
+		await main_scene.shake_camera()
 
 func move_rows(completed_rows: Array, empty_row):
 	var cell_pos
