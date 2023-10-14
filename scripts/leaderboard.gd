@@ -6,36 +6,72 @@ class_name Leaderboards
 var row = preload("res://scenes/leaderboard_row.tscn")
 var row_count = 0 
 var save_path = "user://score.save"
-var player_data: PackedStringArray
 
 func _ready():
 	visible = false
+	load_score()
 
 func _on_back_pressed():
 	get_tree().change_scene_to_file("res://scenes/menu.tscn")
 	visible = false
 
-func add_row(player_name: String):
+func add_row(player_name: String, score):
 	row_count += 1
+	
 	var row_instance = row.instantiate()
 	row_instance.name = "Row" + str(row_count)
 	table.add_child(row_instance)
 	
 	# cambiar la información de los label
-	get_node("ColorRect/MarginContainer/RowsContainer/VBoxContainer/" + row_instance.name + "/Name").text = player_name.to_upper()
-	get_node("ColorRect/MarginContainer/RowsContainer/VBoxContainer/" + row_instance.name + "/Score").text = str(globals.score)
+	table.get_node(row_instance.name + "/Name").text = player_name
+	table.get_node(row_instance.name + "/Score").text = str(score)
 
-func save_score(player_name):
-	var player_data = PackedStringArray([player_name, globals.score])
-	var file = FileAccess.open(save_path, FileAccess.WRITE)
-	file.store_csv_line(player_data, ":")
-	load_score()
+func save_score(player_name: String):
+	var file: FileAccess
+	
+	if !FileAccess.file_exists(save_path):
+		file = FileAccess.open(save_path, FileAccess.WRITE)
+		file.close()
+	
+	file = FileAccess.open(save_path, FileAccess.READ_WRITE)
+	file.seek_end(-1)
+	file.store_line(player_name + ":" + str(globals.score) + "\n")
+	file.close()
+	update_table()
 
 func load_score():
 	if FileAccess.file_exists(save_path):
-		print("file found")
-		var file = FileAccess.open(save_path, FileAccess.READ)
-		var player = file.get_csv_line(":")
+		update_table()
 	else:
-		print("file not found")
+		FileAccess.open(save_path, FileAccess.WRITE)
 		globals.highscore = 0
+
+func customComparison(a, b):
+	if int(a[1]) != int(b[1]):
+		if int(a[1]) < int(b[1]):
+			return true
+		return false
+	return true
+
+func update_table():
+	var file = FileAccess.open(save_path, FileAccess.READ)
+	var player = file.get_csv_line(":")
+	var players_arr: Array
+	
+	# limpia las filas de la tabla
+	for child in table.get_children():
+		table.remove_child(child)
+	
+	# mientras haya lineas con datos de jugadores
+	while player.size() == 2:
+		players_arr.append(player)
+		player = file.get_csv_line(":")
+	
+	# ordena las filas
+	players_arr.sort_custom(customComparison)
+	players_arr.reverse()
+	
+	for n in players_arr.size():
+		add_row(players_arr[n][0], players_arr[n][1])
+	
+	file.close()

@@ -15,7 +15,7 @@ func _ready():
 func _on_button_pressed():
 	var striped_text = line_edit.text.strip_edges(true, true)
 	if striped_text:
-		leaderboard.add_row(striped_text)
+		# primero se ocupa guardar la informacion para que sea ordenada
 		leaderboard.save_score(striped_text)
 		leaderboard.visible = true
 		save.visible = false

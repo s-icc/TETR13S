@@ -12,6 +12,7 @@ func _ready():
 	globals.completed_rows_changed.connect(update_rows_value)
 	globals.score_changed.connect(update_score_value)
 	globals.game_over.connect(open_save_window)
+	globals.reset_game()
 	
 	discord_sdk.state = "Playing Solo"
 	discord_sdk.refresh()

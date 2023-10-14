@@ -11,9 +11,11 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = ExtResource("1_5ayax")
 text = "name"
+uppercase = true
 
 [node name="Score" type="Label" parent="."]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = ExtResource("1_5ayax")
 text = "score"
+uppercase = true
