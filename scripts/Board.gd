@@ -1,10 +1,12 @@
 extends Node2D
 class_name Board
 
-@onready var globals = get_node("/root/Globals")
+@onready var score_system = $"../ScoreSystem" as ScoreSystem
+@onready var globals = get_node("/root/Globals") as GameGlobals
 @onready var tile_map = $TileMap
 @onready var timer = $Timer
-@export var shape_delay: float = 1
+@onready var save_score = $"../Save score"
+
 @export var row_delete_delay: float = 0.2
 @export var block_delete_delay: float = 0.04
 
@@ -30,7 +32,6 @@ enum Block_Type {
 	CEILING = 4,
 	BLOCK = 5
 }
-@onready var score_system = $"../ScoreSystem" as ScoreSystem
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -48,7 +49,7 @@ func _physics_process(_delta):
 	# al acabar el tiempo, mueve la figura una posicion abajo
 	if timer.time_left == 0:
 		move(Vector2.DOWN)
-		timer.start(shape_delay)
+		timer.start(globals.shape_delay)
 
 func spawn_shape(type):
 	$I2.hide()
@@ -76,7 +77,7 @@ func spawn_shape(type):
 	
 	if type != 2:
 		# inicia un temporizador con el delay establecido
-		timer.start(shape_delay)		
+		timer.start(globals.shape_delay)
 	
 	# mover la posicion de la figura hasta que sea valida
 	elif !is_valid_position(shape_pos, Vector2.ZERO):
@@ -104,7 +105,10 @@ func spawn_shape(type):
 		7: $Z2.show()
 	
 	if collides(shape_pos, Block_Type.FLOOR):
-		$SceneTransition.change_scene("res://scenes/game_over.tscn")
+		globals.game_over.emit()
+		set_physics_process(false)
+		set_process_unhandled_input(false)
+		#$SceneTransition.change_scene("res://scenes/game_over.tscn")
 	
 	print_shape()
 
@@ -300,11 +304,13 @@ func _unhandled_input(_event):
 	if Input.is_action_pressed("down"):
 		move(Vector2.DOWN)
 		$"../Move".play()
+		score_system.add_score(1)
 	
 	if Input.is_action_just_pressed("drop"):
 		while move(Vector2.DOWN):
 			continue
 		$"../Drop".play()
+		score_system.add_score(5)
 		
 		
 	if Input.is_action_just_pressed("save"):

@@ -20,5 +20,5 @@ func _on_chkbox_shake_pressed():
 
 func _unhandled_input(event):
 	# agregar icono de regresar aparte de este atajo
-	if Input.is_key_pressed(KEY_ESCAPE):
+	if Input.is_physical_key_pressed(KEY_ESCAPE):
 		get_tree().change_scene_to_file("res://scenes/menu.tscn")

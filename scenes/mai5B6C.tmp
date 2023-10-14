@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://cfcanadl64oir"]
+[gd_scene load_steps=21 format=3 uid="uid://cfcanadl64oir"]
 
 [ext_resource type="PackedScene" uid="uid://bct147xnyycqm" path="res://scenes/background.tscn" id="1_0842q"]
 [ext_resource type="Script" path="res://scripts/Main.gd" id="1_j521j"]
@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://c8nhsrpnw3q1h" path="res://assets/Shapes/T.png" id="12_sbdqr"]
 [ext_resource type="Texture2D" uid="uid://cuwa8lw1u2wmx" path="res://assets/Shapes/Z.png" id="13_f2tay"]
 [ext_resource type="FontFile" uid="uid://dup13uxxpsdap" path="res://fonts/PublicPixel-z84yD.ttf" id="15_uu7k8"]
+[ext_resource type="PackedScene" uid="uid://c76vb08ocstci" path="res://scenes/save_score.tscn" id="17_rh3f6"]
 [ext_resource type="Script" path="res://scripts/ScoreSystem.gd" id="18_nhtir"]
 
 [sub_resource type="Animation" id="Animation_am7fc"]
@@ -248,6 +249,8 @@ theme_override_fonts/font = ExtResource("15_uu7k8")
 theme_override_font_sizes/font_size = 20
 text = "0"
 uppercase = true
+
+[node name="Save score" parent="." instance=ExtResource("17_rh3f6")]
 
 [connection signal="texture_changed" from="Board/I1/I1Sprite" to="background" method="_on_i_1_texture_changed"]
 [connection signal="finished" from="Music1" to="Board" method="_on_music_1_finished"]

@@ -6,6 +6,8 @@ func _ready():
 	$Sprite2D/AnimationPlayer.play("Animation")
 	discord_sdk.state = "Idle"
 	discord_sdk.refresh()
+	# mueve el nodo para que pueda apreciarse el shader
+	get_parent().move_child(self, 0)
 
 func _input(event):
 	if event is InputEventKey:

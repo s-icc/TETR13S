@@ -7,4 +7,3 @@ var crt_shader_node: Node
 func _ready():
 	if crt_shader_scene:
 		crt_shader_node = crt_shader_scene.get_node("CRT-Shader")
-	
