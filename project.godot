@@ -13,12 +13,16 @@ config_version=5
 config/name="TETR13S"
 run/main_scene="res://scenes/menu.tscn"
 config/features=PackedStringArray("4.1", "C#", "Forward Plus")
+boot_splash/bg_color=Color(0.141176, 0.141176, 0.141176, 1)
+boot_splash/image="res://assets/TETR13S.png"
+boot_splash/use_filter=false
 config/icon="res://icon.svg"
 
 [autoload]
 
 DiscordSDKLoader="*res://addons/discord-sdk-gd/nodes/core_updater.gd"
 Globals="*res://scripts/Global.gd"
+Score="*res://scripts/ScoreSystem.gd"
 Leaderboard="*res://scenes/leaderboard.tscn"
 CrtShader="*res://scenes/CRTShader.tscn"
 

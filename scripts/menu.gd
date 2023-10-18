@@ -15,7 +15,7 @@ func _ready():
 	discord_sdk.state = "Idle"
 	discord_sdk.refresh()
 	# mueve el nodo para que pueda apreciarse el shader
-	get_parent().move_child(self, 0)
+	get_parent().move_child.call_deferred(self, 0)
 	textureCRTOFF = load("res://assets/Resources/crtOFF.png")
 	textureCRTON = load("res://assets/Resources/crtON.png")
 	textureSHAKEOFF = load("res://assets/Resources/shakeOFF.png")

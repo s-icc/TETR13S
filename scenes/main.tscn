@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://cfcanadl64oir"]
+[gd_scene load_steps=29 format=3 uid="uid://cfcanadl64oir"]
 
 [ext_resource type="Script" path="res://scripts/Main.gd" id="1_j521j"]
 [ext_resource type="PackedScene" uid="uid://c8lt7f5n5udf6" path="res://scenes/board.tscn" id="1_w43hq"]
@@ -21,7 +21,6 @@
 [ext_resource type="AudioStream" uid="uid://04wetwgve1xl" path="res://assets/SFX/x2mate.com - Dimrain47 - (12) Unfinished Trance (128 kbps).mp3" id="16_7m362"]
 [ext_resource type="AudioStream" uid="uid://b6mej0wlb16rc" path="res://assets/SFX/x2mate.com - Windmill Isle (Day) - Sonic Unleashed [OST] (128 kbps).mp3" id="17_dqr52"]
 [ext_resource type="AudioStream" uid="uid://dql41ob13k4qs" path="res://assets/SFX/x2mate.com - Battle Against A True Hero (128 kbps).mp3" id="18_8ik2a"]
-[ext_resource type="Script" path="res://scripts/ScoreSystem.gd" id="18_nhtir"]
 [ext_resource type="Texture2D" uid="uid://b5ttti8glp8gt" path="res://assets/gameOver.png" id="23_qdm5g"]
 [ext_resource type="AudioStream" uid="uid://blwxf5tde4tti" path="res://assets/SFX/x2mate.com - Terraria Calamity Mod Music - _The Tale of a Cruel World_ - Title Theme (128 kbps)-[AudioTrimmer.com].mp3" id="24_sscbr"]
 
@@ -86,9 +85,6 @@ _data = {
 [node name="Main" type="Node2D"]
 position = Vector2(57, 6)
 script = ExtResource("1_j521j")
-
-[node name="ScoreSystem" type="Node" parent="."]
-script = ExtResource("18_nhtir")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 visible = false

@@ -1,11 +1,10 @@
 extends Node2D
 class_name Board
 
-@onready var score_system = $"../ScoreSystem" as ScoreSystem
 @onready var globals = get_node("/root/Globals") as GameGlobals
+@onready var score_system = get_node("/root/Score") as ScoreSystem
 @onready var tile_map = $TileMap
 @onready var timer = $Timer
-@onready var save_score = $"../Save score"
 
 @export var row_delete_delay: float = 0.2
 @export var block_delete_delay: float = 0.04
@@ -58,77 +57,115 @@ func _ready():
 	var randy = rng.randi_range(0, 3)
 	match randy:
 		0:
-			image = Image.load_from_file("res://assets/Tilemap.png")
+			$TileMap.tile_set.get_source(4).texture = load("res://assets/Tilemap.png")
 			
 			cell_assign = 4
 			$"../original".visible = true
 			$"../Music4".play()
-			spriteI = Image.load_from_file("res://assets/Shapes/I.png")
-			spriteJ = Image.load_from_file("res://assets/Shapes/J.png")
-			spriteL = Image.load_from_file("res://assets/Shapes/L.png")
-			spriteO = Image.load_from_file("res://assets/Shapes/O.png")
-			spriteS = Image.load_from_file("res://assets/Shapes/S.png")
-			spriteT = Image.load_from_file("res://assets/Shapes/T.png")
-			spriteZ = Image.load_from_file("res://assets/Shapes/Z.png")
+			var res: Resource
+			res = load("res://assets/Shapes/I.png")
+			$I1/I1Sprite.texture = res
+			$I2/I2Sprite.texture = res
+			res = load("res://assets/Shapes/J.png")
+			$J1/J1Sprite.texture = res
+			$J2/J2Sprite.texture = res
+			res = load("res://assets/Shapes/L.png")
+			$L1/L1Sprite.texture = res
+			$L2/L2Sprite.texture = res
+			res = load("res://assets/Shapes/O.png")
+			$O1/O1Sprite.texture = res
+			$O2/O2Sprite.texture = res
+			res = load("res://assets/Shapes/S.png")
+			$S1/S1Sprite.texture = res
+			$S2/S2Sprite.texture = res
+			res = load("res://assets/Shapes/T.png")
+			$T1/T1Sprite.texture = res
+			$T2/T2Sprite.texture = res
+			res = load("res://assets/Shapes/Z.png")
+			$Z1/Z1Sprite.texture = res
+			$Z2/Z2Sprite.texture = res
 		1:
-			image = Image.load_from_file("res://assets/Tilemap2.png")
+			$TileMap.tile_set.get_source(4).texture = load("res://assets/Tilemap2.png")
 			cell_assign = 5
 			$"../ColorRect".visible = true
 			$"../Music2".play()
-			spriteI = Image.load_from_file("res://assets/Shapes/I2.png")
-			spriteJ = Image.load_from_file("res://assets/Shapes/J2.png")
-			spriteL = Image.load_from_file("res://assets/Shapes/L2.png")
-			spriteO = Image.load_from_file("res://assets/Shapes/O2.png")
-			spriteS = Image.load_from_file("res://assets/Shapes/S2.png")
-			spriteT = Image.load_from_file("res://assets/Shapes/T2.png")
-			spriteZ = Image.load_from_file("res://assets/Shapes/Z2.png")
+			var res: Resource
+			res = load("res://assets/Shapes/I2.png")
+			$I1/I1Sprite.texture = res
+			$I2/I2Sprite.texture = res
+			res = load("res://assets/Shapes/J2.png")
+			$J1/J1Sprite.texture = res
+			$J2/J2Sprite.texture = res
+			res = load("res://assets/Shapes/L2.png")
+			$L1/L1Sprite.texture = res
+			$L2/L2Sprite.texture = res
+			res = load("res://assets/Shapes/O2.png")
+			$O1/O1Sprite.texture = res
+			$O2/O2Sprite.texture = res
+			res = load("res://assets/Shapes/S2.png")
+			$S1/S1Sprite.texture = res
+			$S2/S2Sprite.texture = res
+			res = load("res://assets/Shapes/T2.png")
+			$T1/T1Sprite.texture = res
+			$T2/T2Sprite.texture = res
+			res = load("res://assets/Shapes/Z2.png")
+			$Z1/Z1Sprite.texture = res
+			$Z2/Z2Sprite.texture = res
 		2:
-			image = Image.load_from_file("res://assets/Tilemap3.png")
+			$TileMap.tile_set.get_source(4).texture = load("res://assets/Tilemap3.png")
 			cell_assign = 6
 			$"../metal".visible = true
 			$"../Music3".play()
-			spriteI = Image.load_from_file("res://assets/Shapes/I3.png")
-			spriteJ = Image.load_from_file("res://assets/Shapes/J3.png")
-			spriteL = Image.load_from_file("res://assets/Shapes/L3.png")
-			spriteO = Image.load_from_file("res://assets/Shapes/O3.png")
-			spriteS = Image.load_from_file("res://assets/Shapes/S3.png")
-			spriteT = Image.load_from_file("res://assets/Shapes/T3.png")
-			spriteZ = Image.load_from_file("res://assets/Shapes/Z3.png")
+			var res: Resource
+			res = load("res://assets/Shapes/I3.png")
+			$I1/I1Sprite.texture = res
+			$I2/I2Sprite.texture = res
+			res = load("res://assets/Shapes/J3.png")
+			$J1/J1Sprite.texture = res
+			$J2/J2Sprite.texture = res
+			res = load("res://assets/Shapes/L3.png")
+			$L1/L1Sprite.texture = res
+			$L2/L2Sprite.texture = res
+			res = load("res://assets/Shapes/O3.png")
+			$O1/O1Sprite.texture = res
+			$O2/O2Sprite.texture = res
+			res = load("res://assets/Shapes/S3.png")
+			$S1/S1Sprite.texture = res
+			$S2/S2Sprite.texture = res
+			res = load("res://assets/Shapes/T3.png")
+			$T1/T1Sprite.texture = res
+			$T2/T2Sprite.texture = res
+			res = load("res://assets/Shapes/Z3.png")
+			$Z1/Z1Sprite.texture = res
+			$Z2/Z2Sprite.texture = res
 		3:
-			image = Image.load_from_file("res://assets/Tilemap4.png")
+			$TileMap.tile_set.get_source(4).texture = load("res://assets/Tilemap4.png")
 			cell_assign = 7
 			$"../biriween".visible = true
 			$"../Music1".play()
-			spriteI = Image.load_from_file("res://assets/Shapes/I4.png")
-			spriteJ = Image.load_from_file("res://assets/Shapes/J4.png")
-			spriteL = Image.load_from_file("res://assets/Shapes/L4.png")
-			spriteO = Image.load_from_file("res://assets/Shapes/O4.png")
-			spriteS = Image.load_from_file("res://assets/Shapes/S4.png")
-			spriteT = Image.load_from_file("res://assets/Shapes/T4.png")
-			spriteZ = Image.load_from_file("res://assets/Shapes/Z4.png")
-	texture = ImageTexture.create_from_image(image)
-	textureI = ImageTexture.create_from_image(spriteI)
-	textureJ = ImageTexture.create_from_image(spriteJ)
-	textureL = ImageTexture.create_from_image(spriteL)
-	textureO = ImageTexture.create_from_image(spriteO)
-	textureS = ImageTexture.create_from_image(spriteS)
-	textureT = ImageTexture.create_from_image(spriteT)
-	textureZ = ImageTexture.create_from_image(spriteZ)
-	$I1/I1Sprite.texture = textureI
-	$I2/I2Sprite.texture = textureI
-	$J1/J1Sprite.texture = textureJ
-	$J2/J2Sprite.texture = textureJ
-	$L1/L1Sprite.texture = textureL
-	$L2/L2Sprite.texture = textureL
-	$O1/O1Sprite.texture = textureO
-	$O2/O2Sprite.texture = textureO
-	$S1/S1Sprite.texture = textureS
-	$S2/S2Sprite.texture = textureS
-	$T1/T1Sprite.texture = textureT
-	$T2/T2Sprite.texture = textureT
-	$Z1/Z1Sprite.texture = textureZ
-	$Z2/Z2Sprite.texture = textureZ
-	$TileMap.tile_set.get_source(4).texture = texture
+			var res: Resource
+			res = load("res://assets/Shapes/I4.png")
+			$I1/I1Sprite.texture = res
+			$I2/I2Sprite.texture = res
+			res = load("res://assets/Shapes/J4.png")
+			$J1/J1Sprite.texture = res
+			$J2/J2Sprite.texture = res
+			res = load("res://assets/Shapes/L4.png")
+			$L1/L1Sprite.texture = res
+			$L2/L2Sprite.texture = res
+			res = load("res://assets/Shapes/O4.png")
+			$O1/O1Sprite.texture = res
+			$O2/O2Sprite.texture = res
+			res = load("res://assets/Shapes/S4.png")
+			$S1/S1Sprite.texture = res
+			$S2/S2Sprite.texture = res
+			res = load("res://assets/Shapes/T4.png")
+			$T1/T1Sprite.texture = res
+			$T2/T2Sprite.texture = res
+			res = load("res://assets/Shapes/Z4.png")
+			$Z1/Z1Sprite.texture = res
+			$Z2/Z2Sprite.texture = res
+
 	main_scene = get_parent()
 	tile_num_width = tile_map.get_used_rect().size.x
 	tile_map_scale = tile_map.scale
