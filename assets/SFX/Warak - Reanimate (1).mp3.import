@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://b72gu4fhpudw5"
+path="res://.godot/imported/Warak - Reanimate (1).mp3-2531138b763d29e69cd59c2bb755b1ba.mp3str"
+
+[deps]
+
+source_file="res://assets/SFX/Warak - Reanimate (1).mp3"
+dest_files=["res://.godot/imported/Warak - Reanimate (1).mp3-2531138b763d29e69cd59c2bb755b1ba.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

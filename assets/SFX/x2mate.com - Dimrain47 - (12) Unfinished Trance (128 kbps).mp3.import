@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://04wetwgve1xl"
+path="res://.godot/imported/x2mate.com - Dimrain47 - (12) Unfinished Trance (128 kbps).mp3-928043f1c6551a3e9c01b1689ebf5518.mp3str"
+
+[deps]
+
+source_file="res://assets/SFX/x2mate.com - Dimrain47 - (12) Unfinished Trance (128 kbps).mp3"
+dest_files=["res://.godot/imported/x2mate.com - Dimrain47 - (12) Unfinished Trance (128 kbps).mp3-928043f1c6551a3e9c01b1689ebf5518.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

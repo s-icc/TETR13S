@@ -7,17 +7,19 @@
 script = ExtResource("1_p7jdl")
 
 [node name="ColorRect" type="ColorRect" parent="."]
-offset_right = 40.0
+offset_right = 45.0
 offset_bottom = 40.0
-scale = Vector2(23.9999, 15)
+scale = Vector2(30, 18.75)
 color = Color(0, 0, 0, 0.470588)
+metadata/_edit_use_anchors_ = true
 
 [node name="Save" type="ColorRect" parent="."]
-offset_left = 256.0
-offset_top = 160.0
-offset_right = 704.0
-offset_bottom = 416.0
-color = Color(0.2, 0.176471, 0.176471, 1)
+offset_left = 369.0
+offset_top = 220.0
+offset_right = 817.0
+offset_bottom = 476.0
+color = Color(0.0911214, 0.0911215, 0.0911214, 1)
+metadata/_edit_use_anchors_ = true
 
 [node name="Score" type="Label" parent="Save"]
 layout_mode = 1
@@ -33,6 +35,7 @@ size_flags_horizontal = 4
 theme_override_fonts/font = ExtResource("2_uxrsi")
 text = "Score"
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Score value" type="Label" parent="Save"]
 layout_mode = 1
@@ -47,6 +50,7 @@ theme_override_font_sizes/font_size = 60
 text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="LineEdit" type="LineEdit" parent="Save"]
 layout_mode = 2
@@ -59,6 +63,7 @@ placeholder_text = "Name"
 alignment = 1
 max_length = 8
 expand_to_text_length = true
+metadata/_edit_use_anchors_ = true
 
 [node name="SaveButton" type="Button" parent="Save"]
 layout_mode = 2
@@ -70,5 +75,6 @@ mouse_default_cursor_shape = 2
 theme_override_fonts/font = ExtResource("2_uxrsi")
 theme_override_font_sizes/font_size = 12
 text = "Save"
+metadata/_edit_use_anchors_ = true
 
 [connection signal="pressed" from="Save/SaveButton" to="." method="_on_button_pressed"]

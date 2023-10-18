@@ -2,7 +2,7 @@ extends Node2D
 class_name Leaderboards
 
 @onready var globals = get_node("/root/Globals") as GameGlobals
-@onready var table = $ColorRect/MarginContainer/RowsContainer/VBoxContainer
+@onready var table = $TextureRect2/MarginContainer/RowsContainer/VBoxContainer
 var row = preload("res://scenes/leaderboard_row.tscn")
 var row_count = 0 
 var save_path = "user://score.save"

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bu65efg487q8a"
+path="res://.godot/imported/x2mate.com - Tetris Theme (Korobeiniki) - Epic Orchestral Remix (128 kbps).mp3-747d22b28cdd87efc9b1ea15c27ae4c7.mp3str"
+
+[deps]
+
+source_file="res://assets/SFX/x2mate.com - Tetris Theme (Korobeiniki) - Epic Orchestral Remix (128 kbps).mp3"
+dest_files=["res://.godot/imported/x2mate.com - Tetris Theme (Korobeiniki) - Epic Orchestral Remix (128 kbps).mp3-747d22b28cdd87efc9b1ea15c27ae4c7.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

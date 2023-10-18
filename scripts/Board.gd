@@ -20,6 +20,26 @@ var middle_tile: int
 var placed_shape
 var tile_num_width
 var tile_map_scale
+var shape_delay = 1
+var rng = RandomNumberGenerator.new()
+var image
+var spriteI
+var spriteJ
+var spriteL
+var spriteO
+var spriteS
+var spriteT
+var spriteZ  
+var texture
+var textureI
+var textureJ
+var textureL
+var textureO
+var textureS
+var textureT
+var textureZ 
+var cell_assign
+var input_band = false
 var blank_tile_pos
 var BOARD_BOUNDS = PackedVector2Array([Vector2(8, 1), Vector2(17, 16)])
 var BOARD_WIDTH = 10
@@ -35,6 +55,80 @@ enum Block_Type {
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	var randy = rng.randi_range(0, 3)
+	match randy:
+		0:
+			image = Image.load_from_file("res://assets/Tilemap.png")
+			
+			cell_assign = 4
+			$"../original".visible = true
+			$"../Music4".play()
+			spriteI = Image.load_from_file("res://assets/Shapes/I.png")
+			spriteJ = Image.load_from_file("res://assets/Shapes/J.png")
+			spriteL = Image.load_from_file("res://assets/Shapes/L.png")
+			spriteO = Image.load_from_file("res://assets/Shapes/O.png")
+			spriteS = Image.load_from_file("res://assets/Shapes/S.png")
+			spriteT = Image.load_from_file("res://assets/Shapes/T.png")
+			spriteZ = Image.load_from_file("res://assets/Shapes/Z.png")
+		1:
+			image = Image.load_from_file("res://assets/Tilemap2.png")
+			cell_assign = 5
+			$"../ColorRect".visible = true
+			$"../Music2".play()
+			spriteI = Image.load_from_file("res://assets/Shapes/I2.png")
+			spriteJ = Image.load_from_file("res://assets/Shapes/J2.png")
+			spriteL = Image.load_from_file("res://assets/Shapes/L2.png")
+			spriteO = Image.load_from_file("res://assets/Shapes/O2.png")
+			spriteS = Image.load_from_file("res://assets/Shapes/S2.png")
+			spriteT = Image.load_from_file("res://assets/Shapes/T2.png")
+			spriteZ = Image.load_from_file("res://assets/Shapes/Z2.png")
+		2:
+			image = Image.load_from_file("res://assets/Tilemap3.png")
+			cell_assign = 6
+			$"../metal".visible = true
+			$"../Music3".play()
+			spriteI = Image.load_from_file("res://assets/Shapes/I3.png")
+			spriteJ = Image.load_from_file("res://assets/Shapes/J3.png")
+			spriteL = Image.load_from_file("res://assets/Shapes/L3.png")
+			spriteO = Image.load_from_file("res://assets/Shapes/O3.png")
+			spriteS = Image.load_from_file("res://assets/Shapes/S3.png")
+			spriteT = Image.load_from_file("res://assets/Shapes/T3.png")
+			spriteZ = Image.load_from_file("res://assets/Shapes/Z3.png")
+		3:
+			image = Image.load_from_file("res://assets/Tilemap4.png")
+			cell_assign = 7
+			$"../biriween".visible = true
+			$"../Music1".play()
+			spriteI = Image.load_from_file("res://assets/Shapes/I4.png")
+			spriteJ = Image.load_from_file("res://assets/Shapes/J4.png")
+			spriteL = Image.load_from_file("res://assets/Shapes/L4.png")
+			spriteO = Image.load_from_file("res://assets/Shapes/O4.png")
+			spriteS = Image.load_from_file("res://assets/Shapes/S4.png")
+			spriteT = Image.load_from_file("res://assets/Shapes/T4.png")
+			spriteZ = Image.load_from_file("res://assets/Shapes/Z4.png")
+	texture = ImageTexture.create_from_image(image)
+	textureI = ImageTexture.create_from_image(spriteI)
+	textureJ = ImageTexture.create_from_image(spriteJ)
+	textureL = ImageTexture.create_from_image(spriteL)
+	textureO = ImageTexture.create_from_image(spriteO)
+	textureS = ImageTexture.create_from_image(spriteS)
+	textureT = ImageTexture.create_from_image(spriteT)
+	textureZ = ImageTexture.create_from_image(spriteZ)
+	$I1/I1Sprite.texture = textureI
+	$I2/I2Sprite.texture = textureI
+	$J1/J1Sprite.texture = textureJ
+	$J2/J2Sprite.texture = textureJ
+	$L1/L1Sprite.texture = textureL
+	$L2/L2Sprite.texture = textureL
+	$O1/O1Sprite.texture = textureO
+	$O2/O2Sprite.texture = textureO
+	$S1/S1Sprite.texture = textureS
+	$S2/S2Sprite.texture = textureS
+	$T1/T1Sprite.texture = textureT
+	$T2/T2Sprite.texture = textureT
+	$Z1/Z1Sprite.texture = textureZ
+	$Z2/Z2Sprite.texture = textureZ
+	$TileMap.tile_set.get_source(4).texture = texture
 	main_scene = get_parent()
 	tile_num_width = tile_map.get_used_rect().size.x
 	tile_map_scale = tile_map.scale
@@ -49,7 +143,7 @@ func _physics_process(_delta):
 	# al acabar el tiempo, mueve la figura una posicion abajo
 	if timer.time_left == 0:
 		move(Vector2.DOWN)
-		timer.start(globals.shape_delay)
+		timer.start(shape_delay)
 
 func spawn_shape(type):
 	$I2.hide()
@@ -77,7 +171,7 @@ func spawn_shape(type):
 	
 	if type != 2:
 		# inicia un temporizador con el delay establecido
-		timer.start(globals.shape_delay)
+		timer.start(shape_delay)
 	
 	# mover la posicion de la figura hasta que sea valida
 	elif !is_valid_position(shape_pos, Vector2.ZERO):
@@ -105,10 +199,21 @@ func spawn_shape(type):
 		7: $Z2.show()
 	
 	if collides(shape_pos, Block_Type.FLOOR):
-		globals.game_over.emit()
 		set_physics_process(false)
 		set_process_unhandled_input(false)
-		#$SceneTransition.change_scene("res://scenes/game_over.tscn")
+		$"../Lose".play()
+		$"../ColorRect2".visible = true
+		$"../Music1".stop()
+		$"../Music2".stop()
+		$"../Music3".stop()
+		$"../Music4".stop()
+		await get_tree().create_timer(2).timeout
+		$"../Sprite2D".visible = true
+		$"../Sprite2D/AnimationPlayer".play("Animation")
+		discord_sdk.state = "Idle"
+		discord_sdk.refresh()
+		$"../Musica".play()
+		input_band = true
 	
 	print_shape()
 
@@ -178,7 +283,7 @@ func is_valid_position(shape_position, direction):
 	return true
 
 func set_tile(tile_pos, atlas_pos):
-	tile_map.set_cell(0, tile_pos, 4, atlas_pos)
+	tile_map.set_cell(0, tile_pos, cell_assign, atlas_pos)
 
 func clear_shape():
 	for block_pos in shape_pos:
@@ -251,6 +356,7 @@ func clear_rows(completed_rows: Array, empty_row):
 	score_system.combo(completed_rows.size())
 	if globals.can_shake:
 		await main_scene.shake_camera()
+	shape_delay -= 0.05
 
 func move_rows(completed_rows: Array, empty_row):
 	var cell_pos
@@ -337,5 +443,9 @@ func _unhandled_input(_event):
 		clear_shape()
 		spawn_shape(2)
 
-func _on_music_1_finished():
-	$"../Music1".play()
+func _input(event):
+	if input_band == true:
+		if event is InputEventKey:
+			if event.pressed:
+				globals.game_over.emit()
+				input_band = false

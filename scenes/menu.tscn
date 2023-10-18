@@ -1,15 +1,26 @@
-[gd_scene load_steps=19 format=3 uid="uid://heth2n11cgkn"]
+[gd_scene load_steps=36 format=3 uid="uid://heth2n11cgkn"]
 
-[ext_resource type="PackedScene" uid="uid://xjgrjs8vubvp" path="res://scenes/menu_bg.tscn" id="1_3ngmc"]
 [ext_resource type="Script" path="res://scripts/menu.gd" id="1_r4n2w"]
 [ext_resource type="Texture2D" uid="uid://xav53usd1wjx" path="res://assets/Resources/logoSheet.png" id="2_a7mx1"]
+[ext_resource type="Texture2D" uid="uid://e1w1na1dik3c" path="res://assets/Resources/menu_bg.png" id="2_x2pn1"]
 [ext_resource type="Script" path="res://scenes/Sprite2D.gd" id="3_kfgkt"]
-[ext_resource type="Texture2D" uid="uid://7m07w0m6g2tj" path="res://assets/Resources/playON.png" id="3_vqygt"]
-[ext_resource type="Texture2D" uid="uid://cwcylwmxvhh7s" path="res://assets/Resources/exitON.png" id="4_risuj"]
-[ext_resource type="Texture2D" uid="uid://bm1du1w1hfxs0" path="res://assets/Resources/playOFF.png" id="4_t0hjs"]
-[ext_resource type="Texture2D" uid="uid://biwv1cpeg5x0e" path="res://assets/Resources/exitOFF.png" id="6_50k0l"]
-[ext_resource type="AudioStream" uid="uid://co0arjttjjlti" path="res://assets/SFX/gb_tetris_theme_a.WAV" id="8_fhdq4"]
+[ext_resource type="AudioStream" uid="uid://bu65efg487q8a" path="res://assets/SFX/x2mate.com - Tetris Theme (Korobeiniki) - Epic Orchestral Remix (128 kbps).mp3" id="4_kkvcw"]
+[ext_resource type="Texture2D" uid="uid://cnehda6rcm56n" path="res://assets/Resources/closeOFF.png" id="6_ygen3"]
+[ext_resource type="Texture2D" uid="uid://btyp8gygwd4sn" path="res://assets/Resources/closeON.png" id="7_tnvgv"]
+[ext_resource type="Texture2D" uid="uid://dgpov6j30ipe7" path="res://assets/Resources/tetrisOFF.png" id="8_gexwe"]
+[ext_resource type="Texture2D" uid="uid://bc2lksopuqjub" path="res://assets/Resources/tetrisON.png" id="9_5jvnk"]
 [ext_resource type="Script" path="res://addons/discord-sdk-gd/example.gd" id="10_b5ecn"]
+[ext_resource type="Texture2D" uid="uid://7dsyg2p8hxuu" path="res://assets/Resources/configOFF.png" id="11_f1vxr"]
+[ext_resource type="Texture2D" uid="uid://dt37bw6f2jjxt" path="res://assets/Resources/configON.png" id="12_n4otc"]
+[ext_resource type="Texture2D" uid="uid://b8qhbsxgt325v" path="res://assets/config_bg.png" id="13_7v7g6"]
+[ext_resource type="Texture2D" uid="uid://bbhp5yyeevpu0" path="res://assets/keys.png" id="14_j27hr"]
+[ext_resource type="Texture2D" uid="uid://dwg0dtchhdd7k" path="res://assets/Resources/nextOFF.png" id="15_33fc7"]
+[ext_resource type="Texture2D" uid="uid://dxej1ns7whrox" path="res://assets/Resources/nextON.png" id="16_1v8ms"]
+[ext_resource type="VideoStream" path="res://assets/Resources/2023-10-17-07-47-42-online-video-cuttercom_eRKtPfnE.ogv" id="17_dr7k8"]
+[ext_resource type="Texture2D" uid="uid://mbsd4b0yyetv" path="res://assets/Resources/crtOFF.png" id="18_qapjp"]
+[ext_resource type="Texture2D" uid="uid://70nj7enpy8v3" path="res://assets/Resources/crtON.png" id="19_acv0u"]
+[ext_resource type="Texture2D" uid="uid://dwh2ix6pu84a0" path="res://assets/Resources/shakeOFF.png" id="20_cqccm"]
+[ext_resource type="Texture2D" uid="uid://nlwlxrn8anvd" path="res://assets/Resources/shakeON.png" id="21_qubu0"]
 
 [sub_resource type="Animation" id="Animation_nge70"]
 resource_name = "Animation"
@@ -34,31 +45,57 @@ _data = {
 }
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_t88yi"]
-texture = ExtResource("6_50k0l")
+texture = ExtResource("6_ygen3")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wsr42"]
-texture = ExtResource("4_risuj")
+texture = ExtResource("7_tnvgv")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_clmko"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_88oeo"]
-texture = ExtResource("4_t0hjs")
+texture = ExtResource("8_gexwe")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vo5y2"]
-texture = ExtResource("3_vqygt")
+texture = ExtResource("9_5jvnk")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6ga56"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xlvpr"]
+texture = ExtResource("11_f1vxr")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xtey7"]
+texture = ExtResource("12_n4otc")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4dmuq"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_y0rus"]
+texture = ExtResource("15_33fc7")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_n8ipt"]
+texture = ExtResource("16_1v8ms")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_c6hlx"]
 
 [node name="menu" type="Node2D"]
 script = ExtResource("1_r4n2w")
 
-[node name="menu_bg" parent="." instance=ExtResource("1_3ngmc")]
-position = Vector2(485, 296)
-scale = Vector2(0.839999, 0.839999)
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="."]
+offset_left = 673.0
+offset_top = -205.0
+offset_right = 2049.0
+offset_bottom = 2227.0
+scale = Vector2(0.45, 0.45)
+stream = ExtResource("17_dr7k8")
+autoplay = true
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 1289.0
+offset_bottom = 727.0
+texture = ExtResource("2_x2pn1")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(485, 124)
-scale = Vector2(0.158333, 0.158333)
+position = Vector2(403, 358)
+scale = Vector2(0.402083, 0.402083)
 texture = ExtResource("2_a7mx1")
 hframes = 4
 script = ExtResource("3_kfgkt")
@@ -69,14 +106,14 @@ libraries = {
 }
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("8_fhdq4")
+stream = ExtResource("4_kkvcw")
 autoplay = true
 
 [node name="Button2" type="Button" parent="."]
-offset_left = 409.0
-offset_top = 349.0
-offset_right = 917.0
-offset_bottom = 607.0
+offset_left = 813.0
+offset_top = 441.0
+offset_right = 1760.0
+offset_bottom = 678.0
 scale = Vector2(0.3, 0.3)
 mouse_default_cursor_shape = 2
 theme_override_styles/normal = SubResource("StyleBoxTexture_t88yi")
@@ -84,10 +121,10 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_wsr42")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_clmko")
 
 [node name="Button" type="Button" parent="."]
-offset_left = 409.0
-offset_top = 246.0
-offset_right = 917.0
-offset_bottom = 504.0
+offset_left = 813.0
+offset_top = 213.0
+offset_right = 1760.0
+offset_bottom = 450.0
 scale = Vector2(0.3, 0.3)
 mouse_default_cursor_shape = 2
 theme_override_styles/normal = SubResource("StyleBoxTexture_88oeo")
@@ -97,6 +134,74 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_6ga56")
 [node name="DiscordRP" type="Node" parent="."]
 script = ExtResource("10_b5ecn")
 
+[node name="Button3" type="Button" parent="."]
+offset_left = 813.0
+offset_top = 327.0
+offset_right = 1760.0
+offset_bottom = 564.0
+scale = Vector2(0.3, 0.3)
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_xlvpr")
+theme_override_styles/hover = SubResource("StyleBoxTexture_xtey7")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_4dmuq")
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+visible = false
+offset_right = 1280.0
+offset_bottom = 720.0
+texture = ExtResource("13_7v7g6")
+
+[node name="TextureRect3" type="TextureRect" parent="."]
+visible = false
+offset_left = 45.0
+offset_top = 93.0
+offset_right = 2349.0
+offset_bottom = 1389.0
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("14_j27hr")
+
+[node name="Button4" type="Button" parent="."]
+visible = false
+offset_left = 813.0
+offset_top = 551.0
+offset_right = 1760.0
+offset_bottom = 788.0
+scale = Vector2(0.3, 0.3)
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_y0rus")
+theme_override_styles/hover = SubResource("StyleBoxTexture_n8ipt")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_c6hlx")
+
+[node name="TextureButton" type="TextureButton" parent="."]
+visible = false
+offset_left = 758.0
+offset_top = 187.0
+offset_right = 1398.0
+offset_bottom = 347.0
+scale = Vector2(0.6, 0.6)
+mouse_default_cursor_shape = 2
+toggle_mode = true
+texture_normal = ExtResource("18_qapjp")
+texture_disabled = ExtResource("19_acv0u")
+
+[node name="TextureButton2" type="TextureButton" parent="."]
+visible = false
+offset_left = 760.0
+offset_top = 349.0
+offset_right = 1400.0
+offset_bottom = 509.0
+scale = Vector2(0.6, 0.6)
+mouse_default_cursor_shape = 2
+toggle_mode = true
+texture_normal = ExtResource("20_cqccm")
+texture_disabled = ExtResource("21_qubu0")
+
+[connection signal="finished" from="VideoStreamPlayer" to="." method="_on_video_stream_player_finished"]
 [connection signal="pressed" from="Button2" to="." method="_on_button_2_pressed"]
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
 [connection signal="toggled" from="Button" to="Button" method="_on_toggled"]
+[connection signal="pressed" from="Button3" to="." method="_on_button_3_pressed"]
+[connection signal="toggled" from="Button3" to="." method="_on_button_3_toggled"]
+[connection signal="pressed" from="Button4" to="." method="_on_button_4_pressed"]
+[connection signal="toggled" from="TextureButton" to="." method="_on_texture_button_toggled"]
+[connection signal="toggled" from="TextureButton2" to="." method="_on_texture_button_2_toggled"]

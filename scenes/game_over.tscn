@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://bjglx1ahio2nb"]
+[gd_scene load_steps=6 format=3 uid="uid://bjglx1ahio2nb"]
 
 [ext_resource type="Script" path="res://scenes/game_over.gd" id="1_8fxt4"]
 [ext_resource type="Texture2D" uid="uid://b5ttti8glp8gt" path="res://assets/gameOver.png" id="2_ijoip"]
+[ext_resource type="AudioStream" uid="uid://blwxf5tde4tti" path="res://assets/SFX/x2mate.com - Terraria Calamity Mod Music - _The Tale of a Cruel World_ - Title Theme (128 kbps)-[AudioTrimmer.com].mp3" id="3_7jwwp"]
 
 [sub_resource type="Animation" id="Animation_8s1df"]
 resource_name = "Animation"
@@ -28,8 +29,8 @@ _data = {
 script = ExtResource("1_8fxt4")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(480, 299.5)
-scale = Vector2(0.239764, 0.239764)
+position = Vector2(642, 364)
+scale = Vector2(0.290551, 0.290551)
 texture = ExtResource("2_ijoip")
 hframes = 2
 frame = 1
@@ -38,3 +39,7 @@ frame = 1
 libraries = {
 "": SubResource("AnimationLibrary_kcdub")
 }
+
+[node name="Musica" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_7jwwp")
+autoplay = true

@@ -7,7 +7,7 @@
 [node name="CRT-Shader" type="ColorRect" parent="."]
 visible = false
 material = ExtResource("1_a1r30")
-offset_right = 1152.0
-offset_bottom = 704.0
+offset_right = 12080.0
+offset_bottom = 900.0
 scale = Vector2(0.834067, 0.854183)
 mouse_filter = 2

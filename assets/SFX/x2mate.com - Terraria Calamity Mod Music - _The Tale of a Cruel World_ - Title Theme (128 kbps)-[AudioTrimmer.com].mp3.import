@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://blwxf5tde4tti"
+path="res://.godot/imported/x2mate.com - Terraria Calamity Mod Music - _The Tale of a Cruel World_ - Title Theme (128 kbps)-[AudioTrimmer.com].mp3-f93c2615e6e2a749f5aa12180415c469.mp3str"
+
+[deps]
+
+source_file="res://assets/SFX/x2mate.com - Terraria Calamity Mod Music - _The Tale of a Cruel World_ - Title Theme (128 kbps)-[AudioTrimmer.com].mp3"
+dest_files=["res://.godot/imported/x2mate.com - Terraria Calamity Mod Music - _The Tale of a Cruel World_ - Title Theme (128 kbps)-[AudioTrimmer.com].mp3-f93c2615e6e2a749f5aa12180415c469.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

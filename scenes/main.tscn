@@ -1,12 +1,13 @@
-[gd_scene load_steps=20 format=3 uid="uid://cfcanadl64oir"]
+[gd_scene load_steps=30 format=3 uid="uid://cfcanadl64oir"]
 
-[ext_resource type="PackedScene" uid="uid://bct147xnyycqm" path="res://scenes/background.tscn" id="1_0842q"]
 [ext_resource type="Script" path="res://scripts/Main.gd" id="1_j521j"]
 [ext_resource type="PackedScene" uid="uid://c8lt7f5n5udf6" path="res://scenes/board.tscn" id="1_w43hq"]
+[ext_resource type="PackedScene" uid="uid://dehjibikm1dn6" path="res://scenes/biriween.tscn" id="3_2fle3"]
 [ext_resource type="AudioStream" uid="uid://dq5fbs74jvuj4" path="res://assets/SFX/blipSelect.wav" id="3_gsp8e"]
+[ext_resource type="PackedScene" uid="uid://xh67asp3deio" path="res://scenes/original.tscn" id="4_ksw7p"]
 [ext_resource type="AudioStream" uid="uid://c0qarbphe5l18" path="res://assets/SFX/hitHurt.wav" id="4_uigef"]
+[ext_resource type="PackedScene" uid="uid://dc53fshv62bnl" path="res://scenes/metal.tscn" id="5_6jisj"]
 [ext_resource type="AudioStream" uid="uid://ujcnquuy1srf" path="res://assets/SFX/powerUp.wav" id="5_8a2xu"]
-[ext_resource type="AudioStream" uid="uid://cc0sb5jkbdplj" path="res://assets/SFX/Ocarina_of_Time-Gerudo_Valley.WAV" id="6_4rfd4"]
 [ext_resource type="Texture2D" uid="uid://c5wtjj8cev85t" path="res://assets/Shapes/L.png" id="6_f4sbo"]
 [ext_resource type="Texture2D" uid="uid://kqcjd2xuth0n" path="res://assets/Shapes/I.png" id="8_vs62h"]
 [ext_resource type="Texture2D" uid="uid://cf4pnjhpu2sca" path="res://assets/Shapes/J.png" id="9_83tob"]
@@ -14,8 +15,15 @@
 [ext_resource type="Texture2D" uid="uid://ltvfxbhl4bm" path="res://assets/Shapes/S.png" id="11_3nifk"]
 [ext_resource type="Texture2D" uid="uid://c8nhsrpnw3q1h" path="res://assets/Shapes/T.png" id="12_sbdqr"]
 [ext_resource type="Texture2D" uid="uid://cuwa8lw1u2wmx" path="res://assets/Shapes/Z.png" id="13_f2tay"]
+[ext_resource type="AudioStream" uid="uid://co6m5juag6gur" path="res://assets/SFX/explosion.wav" id="14_3aufg"]
 [ext_resource type="FontFile" uid="uid://dup13uxxpsdap" path="res://fonts/PublicPixel-z84yD.ttf" id="15_uu7k8"]
+[ext_resource type="AudioStream" uid="uid://ckcbtcjt1aiy1" path="res://assets/SFX/x2mate.com - Loonboon (128 kbps).mp3" id="15_w8vie"]
+[ext_resource type="AudioStream" uid="uid://04wetwgve1xl" path="res://assets/SFX/x2mate.com - Dimrain47 - (12) Unfinished Trance (128 kbps).mp3" id="16_7m362"]
+[ext_resource type="AudioStream" uid="uid://b6mej0wlb16rc" path="res://assets/SFX/x2mate.com - Windmill Isle (Day) - Sonic Unleashed [OST] (128 kbps).mp3" id="17_dqr52"]
+[ext_resource type="AudioStream" uid="uid://dql41ob13k4qs" path="res://assets/SFX/x2mate.com - Battle Against A True Hero (128 kbps).mp3" id="18_8ik2a"]
 [ext_resource type="Script" path="res://scripts/ScoreSystem.gd" id="18_nhtir"]
+[ext_resource type="Texture2D" uid="uid://b5ttti8glp8gt" path="res://assets/gameOver.png" id="23_qdm5g"]
+[ext_resource type="AudioStream" uid="uid://blwxf5tde4tti" path="res://assets/SFX/x2mate.com - Terraria Calamity Mod Music - _The Tale of a Cruel World_ - Title Theme (128 kbps)-[AudioTrimmer.com].mp3" id="24_sscbr"]
 
 [sub_resource type="Animation" id="Animation_am7fc"]
 length = 0.001
@@ -54,20 +62,58 @@ _data = {
 "cam_shake": SubResource("Animation_mc3a3")
 }
 
+[sub_resource type="Animation" id="Animation_8s1df"]
+resource_name = "Animation"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kcdub"]
+_data = {
+"Animation": SubResource("Animation_8s1df")
+}
+
 [node name="Main" type="Node2D"]
+position = Vector2(57, 6)
 script = ExtResource("1_j521j")
 
 [node name="ScoreSystem" type="Node" parent="."]
 script = ExtResource("18_nhtir")
 
-[node name="background" parent="." instance=ExtResource("1_0842q")]
-modulate = Color(0.380392, 0.380392, 0.380392, 1)
-position = Vector2(474, 304)
-scale = Vector2(0.85, 0.85)
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+offset_left = -85.0
+offset_top = -19.0
+offset_right = 1254.0
+offset_bottom = 734.0
+color = Color(0.545098, 0.584314, 0.427451, 1)
+
+[node name="biriween" parent="." instance=ExtResource("3_2fle3")]
+visible = false
+position = Vector2(-87, -26)
+scale = Vector2(1.05, 1.05)
+
+[node name="original" parent="." instance=ExtResource("4_ksw7p")]
+visible = false
+position = Vector2(-57, 0)
+
+[node name="metal" parent="." instance=ExtResource("5_6jisj")]
+visible = false
+position = Vector2(582, 345)
+scale = Vector2(1.8, 1.8)
 
 [node name="Board" parent="." instance=ExtResource("1_w43hq")]
-position = Vector2(133, 66)
-scale = Vector2(0.825888, 0.825888)
+position = Vector2(161, 66)
 
 [node name="I1" type="Node2D" parent="Board"]
 visible = false
@@ -182,6 +228,9 @@ position = Vector2(737, 114)
 scale = Vector2(1.75, 1.75)
 texture = ExtResource("13_f2tay")
 
+[node name="Lose" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("14_3aufg")
+
 [node name="Move" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_gsp8e")
 
@@ -193,11 +242,19 @@ position = Vector2(-11, -9)
 stream = ExtResource("5_8a2xu")
 
 [node name="Music1" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("6_4rfd4")
-autoplay = true
+stream = ExtResource("15_w8vie")
+
+[node name="Music2" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("16_7m362")
+
+[node name="Music3" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("17_dqr52")
+
+[node name="Music4" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("18_8ik2a")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(480, 300)
+position = Vector2(582, 354)
 
 [node name="AnimationCamera" type="AnimationPlayer" parent="."]
 libraries = {
@@ -205,10 +262,10 @@ libraries = {
 }
 
 [node name="HFlowContainer" type="HFlowContainer" parent="."]
-offset_left = 149.0
-offset_top = 281.0
-offset_right = 209.0
-offset_bottom = 381.0
+offset_left = 183.0
+offset_top = 316.0
+offset_right = 243.0
+offset_bottom = 416.0
 theme_override_constants/v_separation = 20
 
 [node name="Score Container" type="HFlowContainer" parent="HFlowContainer"]
@@ -249,5 +306,32 @@ theme_override_font_sizes/font_size = 20
 text = "0"
 uppercase = true
 
-[connection signal="texture_changed" from="Board/I1/I1Sprite" to="background" method="_on_i_1_texture_changed"]
+[node name="ColorRect2" type="ColorRect" parent="."]
+visible = false
+offset_left = -90.0
+offset_top = -33.0
+offset_right = 1277.0
+offset_bottom = 746.0
+color = Color(0, 0, 0, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(606, 364)
+scale = Vector2(0.290551, 0.290551)
+texture = ExtResource("23_qdm5g")
+hframes = 2
+frame = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
+libraries = {
+"": SubResource("AnimationLibrary_kcdub")
+}
+
+[node name="Musica" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("24_sscbr")
+
+[connection signal="finished" from="Music1" to="." method="_on_music_1_finished"]
 [connection signal="finished" from="Music1" to="Board" method="_on_music_1_finished"]
+[connection signal="finished" from="Music2" to="." method="_on_music_2_finished"]
+[connection signal="finished" from="Music3" to="." method="_on_music_3_finished"]
+[connection signal="finished" from="Music4" to="." method="_on_music_4_finished"]

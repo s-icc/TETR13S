@@ -31,3 +31,16 @@ func update_score_value():
 
 func open_save_window():
 	add_child(save_window.instantiate())
+
+
+func _on_music_1_finished():
+	$Music1.play()
+
+func _on_music_2_finished():
+	$Music2.play()
+
+func _on_music_3_finished():
+	$Music3.play()
+
+func _on_music_4_finished():
+	$Music4.play()
