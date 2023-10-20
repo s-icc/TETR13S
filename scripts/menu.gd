@@ -1,14 +1,7 @@
 extends Node2D
 
-var crtOFF
-var crtON
-var shakeOFF
-var shakeON
-var textureCRTOFF: Texture2D
-var textureCRTON: Texture2D
-var textureSHAKEOFF: Texture2D
-var textureSHAKEON: Texture2D
 @onready var shader = get_node("/root/CrtShader")
+@onready var textures = get_node("/root/GameTextures") as Textures
 @onready var globals = get_node("/root/Globals")
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -16,10 +9,6 @@ func _ready():
 	discord_sdk.refresh()
 	# mueve el nodo para que pueda apreciarse el shader
 	get_parent().move_child.call_deferred(self, 0)
-	textureCRTOFF = load("res://assets/Resources/crtOFF.png")
-	textureCRTON = load("res://assets/Resources/crtON.png")
-	textureSHAKEOFF = load("res://assets/Resources/shakeOFF.png")
-	textureSHAKEON = load("res://assets/Resources/shakeON.png")
 	$TextureButton.button_pressed = shader.get_node("CRT-Shader").visible
 	$TextureButton2.button_pressed = globals.can_shake
 
@@ -47,18 +36,18 @@ func _on_video_stream_player_finished():
 	$VideoStreamPlayer.play()
 
 func _on_texture_button_toggled(button_pressed):
-	if button_pressed == true:
-		$TextureButton.set_texture_normal(textureCRTON)
+	if button_pressed:
+		$TextureButton.set_texture_normal(textures.crt_on)
 		shader.get_node("CRT-Shader").visible = true
 		get_parent().move_child(self, 0)
 	else: 
-		$TextureButton.set_texture_normal(textureCRTOFF)
+		$TextureButton.set_texture_normal(textures.crt_off)
 		shader.get_node("CRT-Shader").visible = false
 
 func _on_texture_button_2_toggled(button_pressed):
-	if button_pressed == true:
-		$TextureButton2.set_texture_normal(textureSHAKEON)
+	if button_pressed:
+		$TextureButton2.set_texture_normal(textures.shake_on)
 		globals.can_shake = true
 	else: 
-		$TextureButton2.set_texture_normal(textureSHAKEOFF)
+		$TextureButton2.set_texture_normal(textures.shake_off)
 		globals.can_shake = false

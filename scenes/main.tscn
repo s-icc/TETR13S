@@ -111,116 +111,91 @@ scale = Vector2(1.8, 1.8)
 [node name="Board" parent="." instance=ExtResource("1_w43hq")]
 position = Vector2(161, 66)
 
-[node name="I1" type="Node2D" parent="Board"]
+[node name="Next shape" type="Node2D" parent="Board"]
+
+[node name="I" type="Sprite2D" parent="Board/Next shape"]
 visible = false
-
-[node name="I1Sprite" type="Sprite2D" parent="Board/I1"]
-position = Vector2(95, 111)
-scale = Vector2(1.75, 1.75)
-texture = ExtResource("8_vs62h")
-
-[node name="I2" type="Node2D" parent="Board"]
-visible = false
-
-[node name="I2Sprite" type="Sprite2D" parent="Board/I2"]
 position = Vector2(736, 109)
 scale = Vector2(1.75, 1.75)
 texture = ExtResource("8_vs62h")
 
-[node name="J1" type="Node2D" parent="Board"]
+[node name="J" type="Sprite2D" parent="Board/Next shape"]
 visible = false
-
-[node name="J1Sprite" type="Sprite2D" parent="Board/J1"]
-position = Vector2(94, 111)
-scale = Vector2(1.75, 1.75)
-texture = ExtResource("9_83tob")
-
-[node name="J2" type="Node2D" parent="Board"]
-visible = false
-
-[node name="J2Sprite" type="Sprite2D" parent="Board/J2"]
 position = Vector2(734, 113)
 scale = Vector2(1.75, 1.75)
 texture = ExtResource("9_83tob")
 
-[node name="L1" type="Node2D" parent="Board"]
+[node name="L" type="Sprite2D" parent="Board/Next shape"]
 visible = false
-scale = Vector2(1.75, 1.75)
-
-[node name="L1Sprite" type="Sprite2D" parent="Board/L1"]
-position = Vector2(55.4286, 62.8571)
-texture = ExtResource("6_f4sbo")
-
-[node name="L2" type="Node2D" parent="Board"]
-visible = false
-
-[node name="L2Sprite" type="Sprite2D" parent="Board/L2"]
 position = Vector2(737, 110)
 scale = Vector2(1.75, 1.75)
 texture = ExtResource("6_f4sbo")
 
-[node name="O1" type="Node2D" parent="Board"]
+[node name="O" type="Sprite2D" parent="Board/Next shape"]
 visible = false
-position = Vector2(-59, -12)
-
-[node name="O1Sprite" type="Sprite2D" parent="Board/O1"]
-position = Vector2(155, 124)
-scale = Vector2(1.75, 1.75)
-texture = ExtResource("10_fp36y")
-
-[node name="O2" type="Node2D" parent="Board"]
-visible = false
-
-[node name="O2Sprite" type="Sprite2D" parent="Board/O2"]
 position = Vector2(734, 111)
 scale = Vector2(1.75, 1.75)
 texture = ExtResource("10_fp36y")
 
-[node name="S1" type="Node2D" parent="Board"]
+[node name="S" type="Sprite2D" parent="Board/Next shape"]
 visible = false
-
-[node name="S1Sprite" type="Sprite2D" parent="Board/S1"]
-position = Vector2(95, 114)
-scale = Vector2(1.75, 1.75)
-texture = ExtResource("11_3nifk")
-
-[node name="S2" type="Node2D" parent="Board"]
-visible = false
-
-[node name="S2Sprite" type="Sprite2D" parent="Board/S2"]
 position = Vector2(736, 113)
 scale = Vector2(1.75, 1.75)
 texture = ExtResource("11_3nifk")
 
-[node name="T1" type="Node2D" parent="Board"]
+[node name="T" type="Sprite2D" parent="Board/Next shape"]
 visible = false
-
-[node name="T1Sprite" type="Sprite2D" parent="Board/T1"]
-position = Vector2(96, 111)
-scale = Vector2(1.75, 1.75)
-texture = ExtResource("12_sbdqr")
-
-[node name="T2" type="Node2D" parent="Board"]
-visible = false
-
-[node name="T2Sprite" type="Sprite2D" parent="Board/T2"]
 position = Vector2(737, 113)
 scale = Vector2(1.75, 1.75)
 texture = ExtResource("12_sbdqr")
 
-[node name="Z1" type="Node2D" parent="Board"]
+[node name="Z" type="Sprite2D" parent="Board/Next shape"]
 visible = false
-
-[node name="Z1Sprite" type="Sprite2D" parent="Board/Z1"]
-position = Vector2(96, 114)
+position = Vector2(737, 114)
 scale = Vector2(1.75, 1.75)
 texture = ExtResource("13_f2tay")
 
-[node name="Z2" type="Node2D" parent="Board"]
-visible = false
+[node name="Saved shape" type="Node2D" parent="Board"]
 
-[node name="Z2Sprite" type="Sprite2D" parent="Board/Z2"]
-position = Vector2(737, 114)
+[node name="I" type="Sprite2D" parent="Board/Saved shape"]
+visible = false
+position = Vector2(95, 111)
+scale = Vector2(1.75, 1.75)
+texture = ExtResource("8_vs62h")
+
+[node name="J" type="Sprite2D" parent="Board/Saved shape"]
+visible = false
+position = Vector2(94, 111)
+scale = Vector2(1.75, 1.75)
+texture = ExtResource("9_83tob")
+
+[node name="L" type="Sprite2D" parent="Board/Saved shape"]
+visible = false
+position = Vector2(97.0001, 110)
+scale = Vector2(1.75, 1.75)
+texture = ExtResource("6_f4sbo")
+
+[node name="O" type="Sprite2D" parent="Board/Saved shape"]
+visible = false
+position = Vector2(96, 112)
+scale = Vector2(1.75, 1.75)
+texture = ExtResource("10_fp36y")
+
+[node name="S" type="Sprite2D" parent="Board/Saved shape"]
+visible = false
+position = Vector2(95, 114)
+scale = Vector2(1.75, 1.75)
+texture = ExtResource("11_3nifk")
+
+[node name="T" type="Sprite2D" parent="Board/Saved shape"]
+visible = false
+position = Vector2(96, 111)
+scale = Vector2(1.75, 1.75)
+texture = ExtResource("12_sbdqr")
+
+[node name="Z" type="Sprite2D" parent="Board/Saved shape"]
+visible = false
+position = Vector2(96, 114)
 scale = Vector2(1.75, 1.75)
 texture = ExtResource("13_f2tay")
 

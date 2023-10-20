@@ -21,6 +21,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 DiscordSDKLoader="*res://addons/discord-sdk-gd/nodes/core_updater.gd"
+GameTextures="*res://scripts/Textures.gd"
 Globals="*res://scripts/Global.gd"
 Score="*res://scripts/ScoreSystem.gd"
 Leaderboard="*res://scenes/leaderboard.tscn"

@@ -2,6 +2,7 @@ extends Node2D
 class_name Board
 
 @onready var globals = get_node("/root/Globals") as GameGlobals
+@onready var textures = get_node("/root/GameTextures") as Textures
 @onready var score_system = get_node("/root/Score") as ScoreSystem
 @onready var tile_map = $TileMap
 @onready var timer = $Timer
@@ -21,22 +22,6 @@ var tile_num_width
 var tile_map_scale
 var shape_delay = 1
 var rng = RandomNumberGenerator.new()
-var image
-var spriteI
-var spriteJ
-var spriteL
-var spriteO
-var spriteS
-var spriteT
-var spriteZ  
-var texture
-var textureI
-var textureJ
-var textureL
-var textureO
-var textureS
-var textureT
-var textureZ 
 var cell_assign
 var input_band = false
 var blank_tile_pos
@@ -57,114 +42,50 @@ func _ready():
 	var randy = rng.randi_range(0, 3)
 	match randy:
 		0:
-			$TileMap.tile_set.get_source(4).texture = load("res://assets/Tilemap.png")
+			$TileMap.tile_set.get_source(4).texture = textures.original_tilemap
 			
 			cell_assign = 4
 			$"../original".visible = true
 			$"../Music4".play()
-			var res: Resource
-			res = load("res://assets/Shapes/I.png")
-			$I1/I1Sprite.texture = res
-			$I2/I2Sprite.texture = res
-			res = load("res://assets/Shapes/J.png")
-			$J1/J1Sprite.texture = res
-			$J2/J2Sprite.texture = res
-			res = load("res://assets/Shapes/L.png")
-			$L1/L1Sprite.texture = res
-			$L2/L2Sprite.texture = res
-			res = load("res://assets/Shapes/O.png")
-			$O1/O1Sprite.texture = res
-			$O2/O2Sprite.texture = res
-			res = load("res://assets/Shapes/S.png")
-			$S1/S1Sprite.texture = res
-			$S2/S2Sprite.texture = res
-			res = load("res://assets/Shapes/T.png")
-			$T1/T1Sprite.texture = res
-			$T2/T2Sprite.texture = res
-			res = load("res://assets/Shapes/Z.png")
-			$Z1/Z1Sprite.texture = res
-			$Z2/Z2Sprite.texture = res
+			
+			for shape in $"Next shape".get_children():
+				shape.texture = textures.original[shape.get_index()]
+			
+			for shape in $"Saved shape".get_children():
+				shape.texture = textures.original[shape.get_index()]
 		1:
-			$TileMap.tile_set.get_source(4).texture = load("res://assets/Tilemap2.png")
+			$TileMap.tile_set.get_source(4).texture = textures.retro_tilemap
 			cell_assign = 5
 			$"../ColorRect".visible = true
 			$"../Music2".play()
-			var res: Resource
-			res = load("res://assets/Shapes/I2.png")
-			$I1/I1Sprite.texture = res
-			$I2/I2Sprite.texture = res
-			res = load("res://assets/Shapes/J2.png")
-			$J1/J1Sprite.texture = res
-			$J2/J2Sprite.texture = res
-			res = load("res://assets/Shapes/L2.png")
-			$L1/L1Sprite.texture = res
-			$L2/L2Sprite.texture = res
-			res = load("res://assets/Shapes/O2.png")
-			$O1/O1Sprite.texture = res
-			$O2/O2Sprite.texture = res
-			res = load("res://assets/Shapes/S2.png")
-			$S1/S1Sprite.texture = res
-			$S2/S2Sprite.texture = res
-			res = load("res://assets/Shapes/T2.png")
-			$T1/T1Sprite.texture = res
-			$T2/T2Sprite.texture = res
-			res = load("res://assets/Shapes/Z2.png")
-			$Z1/Z1Sprite.texture = res
-			$Z2/Z2Sprite.texture = res
+			
+			for shape in $"Next shape".get_children():
+				shape.texture = textures.retro[shape.get_index()]
+			
+			for shape in $"Saved shape".get_children():
+				shape.texture = textures.retro[shape.get_index()]
 		2:
-			$TileMap.tile_set.get_source(4).texture = load("res://assets/Tilemap3.png")
+			$TileMap.tile_set.get_source(4).texture = textures.metal_tilemap
 			cell_assign = 6
 			$"../metal".visible = true
 			$"../Music3".play()
-			var res: Resource
-			res = load("res://assets/Shapes/I3.png")
-			$I1/I1Sprite.texture = res
-			$I2/I2Sprite.texture = res
-			res = load("res://assets/Shapes/J3.png")
-			$J1/J1Sprite.texture = res
-			$J2/J2Sprite.texture = res
-			res = load("res://assets/Shapes/L3.png")
-			$L1/L1Sprite.texture = res
-			$L2/L2Sprite.texture = res
-			res = load("res://assets/Shapes/O3.png")
-			$O1/O1Sprite.texture = res
-			$O2/O2Sprite.texture = res
-			res = load("res://assets/Shapes/S3.png")
-			$S1/S1Sprite.texture = res
-			$S2/S2Sprite.texture = res
-			res = load("res://assets/Shapes/T3.png")
-			$T1/T1Sprite.texture = res
-			$T2/T2Sprite.texture = res
-			res = load("res://assets/Shapes/Z3.png")
-			$Z1/Z1Sprite.texture = res
-			$Z2/Z2Sprite.texture = res
+			
+			for shape in $"Next shape".get_children():
+				shape.texture = textures.metal[shape.get_index()]
+			
+			for shape in $"Saved shape".get_children():
+				shape.texture = textures.metal[shape.get_index()]
 		3:
-			$TileMap.tile_set.get_source(4).texture = load("res://assets/Tilemap4.png")
+			$TileMap.tile_set.get_source(4).texture = textures.biriween_tilemap
 			cell_assign = 7
 			$"../biriween".visible = true
 			$"../Music1".play()
-			var res: Resource
-			res = load("res://assets/Shapes/I4.png")
-			$I1/I1Sprite.texture = res
-			$I2/I2Sprite.texture = res
-			res = load("res://assets/Shapes/J4.png")
-			$J1/J1Sprite.texture = res
-			$J2/J2Sprite.texture = res
-			res = load("res://assets/Shapes/L4.png")
-			$L1/L1Sprite.texture = res
-			$L2/L2Sprite.texture = res
-			res = load("res://assets/Shapes/O4.png")
-			$O1/O1Sprite.texture = res
-			$O2/O2Sprite.texture = res
-			res = load("res://assets/Shapes/S4.png")
-			$S1/S1Sprite.texture = res
-			$S2/S2Sprite.texture = res
-			res = load("res://assets/Shapes/T4.png")
-			$T1/T1Sprite.texture = res
-			$T2/T2Sprite.texture = res
-			res = load("res://assets/Shapes/Z4.png")
-			$Z1/Z1Sprite.texture = res
-			$Z2/Z2Sprite.texture = res
+			
+			for shape in $"Next shape".get_children():
+				shape.texture = textures.biriween[shape.get_index()]
+			
+			for shape in $"Saved shape".get_children():
+				shape.texture = textures.biriween[shape.get_index()]
 
 	main_scene = get_parent()
 	tile_num_width = tile_map.get_used_rect().size.x
@@ -183,13 +104,8 @@ func _physics_process(_delta):
 		timer.start(shape_delay)
 
 func spawn_shape(type):
-	$I2.hide()
-	$J2.hide()
-	$L2.hide()
-	$O2.hide()
-	$S2.hide()
-	$T2.hide()
-	$Z2.hide()
+	for shape in $"Next shape".get_children():
+		shape.hide()
 	
 	placed_shape = false
 	shape_pos.clear() # limpia la posicion de la figura en el tablero
@@ -226,14 +142,7 @@ func spawn_shape(type):
 			shape_pos = translate_position(Vector2.LEFT)
 	
 	var shown = block_fact.showShape(shape)
-	match shown:
-		1: $I2.show()
-		2: $J2.show()
-		3: $L2.show()
-		4: $O2.show()
-		5: $S2.show()
-		6: $T2.show()
-		7: $Z2.show()
+	$"Next shape".get_child(shown).show()
 	
 	if collides(shape_pos, Block_Type.FLOOR):
 		set_physics_process(false)
@@ -460,29 +369,18 @@ func _unhandled_input(_event):
 		clear_shape()
 		spawn_shape(1)
 		var numb = block_fact.showSavedShape(shape)
-		$I1.hide()
-		$J1.hide()
-		$L1.hide()
-		$O1.hide()
-		$S1.hide()
-		$T1.hide()
-		$Z1.hide()
-		match numb:
-			1: $I1.show()
-			2: $J1.show()
-			3: $L1.show()
-			4: $O1.show()
-			5: $S1.show()
-			6: $T1.show()
-			7: $Z1.show()
+		for shape in $"Saved shape".get_children():
+			shape.hide()
+		$"Saved shape".get_child(numb).show()
 	
 	if Input.is_action_just_pressed("rotate_right"):
 		clear_shape()
 		spawn_shape(2)
 
 func _input(event):
-	if input_band == true:
-		if event is InputEventKey:
-			if event.pressed:
-				globals.game_over.emit()
-				input_band = false
+	if !input_band:
+		return
+		
+	if event is InputEventKey and event.is_pressed():
+		globals.game_over.emit()
+		input_band = false

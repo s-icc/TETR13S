@@ -66,8 +66,6 @@ var shape
 var shape2
 var shapeInv
 var rotate = 0
-var sShape = 0
-var xShape = 0
 var rotShape
 
 static func get_instance():
@@ -127,35 +125,7 @@ func get_placed_block_atlas_coords():
 	
 
 func showShape(shape):
-	if shape2 == shapes[0]:
-		sShape = 1
-	elif shape2 == shapes[1]:
-		sShape = 2
-	elif shape2 == shapes[2]:
-		sShape = 3
-	elif shape2 == shapes[3]:
-		sShape = 4
-	elif shape2 == shapes[4]:
-		sShape = 5
-	elif shape2 == shapes[5]:
-		sShape = 6
-	elif shape2 == shapes[6]:
-		sShape = 7
-	return sShape
+	return shapes.find(shape2)
 	
 func showSavedShape(shapeX):
-	if shapeInv == shapes[0]:
-		xShape = 1
-	elif shapeInv == shapes[1]:
-		xShape = 2
-	elif shapeInv == shapes[2]:
-		xShape = 3
-	elif shapeInv == shapes[3]:
-		xShape = 4
-	elif shapeInv == shapes[4]:
-		xShape = 5
-	elif shapeInv == shapes[5]:
-		xShape = 6
-	elif shapeInv == shapes[6]:
-		xShape = 7
-	return xShape
+	return shapes.find(shapeInv)

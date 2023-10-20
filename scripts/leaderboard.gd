@@ -12,7 +12,6 @@ func _ready():
 	load_score()
 
 func _on_back_pressed():
-	get_tree().change_scene_to_file("res://scenes/menu.tscn")
 	visible = false
 
 func add_row(player_name: String, score):
@@ -50,8 +49,7 @@ func customComparison(a, b):
 	if int(a[1]) != int(b[1]):
 		if int(a[1]) < int(b[1]):
 			return true
-		return false
-	return true
+	return false
 
 func update_table():
 	var file = FileAccess.open(save_path, FileAccess.READ)
@@ -71,6 +69,7 @@ func update_table():
 	players_arr.sort_custom(customComparison)
 	players_arr.reverse()
 	
+	globals.highscore = int(players_arr[0][1])
 	for n in players_arr.size():
 		add_row(players_arr[n][0], players_arr[n][1])
 	
